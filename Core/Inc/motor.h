@@ -15,6 +15,6 @@ void TIM_SetCompare_CH2(uint16_t Compare, TIM_TypeDef* TIMx);
 void TIM_SetCompare_CH3(uint16_t Compare, TIM_TypeDef* TIMx);
 void TIM_SetCompare_CH4(uint16_t Compare, TIM_TypeDef* TIMx);
 
-
+void Motor_test(void);
 #endif //MOTOR_H
 

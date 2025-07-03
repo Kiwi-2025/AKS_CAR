@@ -152,3 +152,25 @@ void TIM_SetCompare_CH4(uint16_t Compare, TIM_TypeDef* TIMx) {
     /* Set the Capture Compare1 Register value */
     TIMx->CCR4 = Compare;
 }
+
+void Motor_test(void) {
+  TIM_SetCompare_CH1(50, TIM1); // 设置TIM1通道1的占空比为50%
+  for (int state =0; state < 3 ; state++) {
+    switch (state) {
+      case 0 : // 前进
+        TIM_SetCompare_CH1(80, TIM1); // 设置占空比为80%
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
+        break;
+      case 1 : // 后退
+        TIM_SetCompare_CH1(30, TIM1); // 设置占空比为30%
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
+        break;
+      case 2 : // 停止
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
+    }
+    HAL_Delay(1000);
+  }
+}
