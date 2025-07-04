@@ -89,10 +89,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   // 初始化电机控制，周期为1000，使得电机转动速度可以的得到更加精准的控制
-  Motor_Control_Init(7200, 1000); // 初始化电机控制，设置预分频器为7200，周期为1000
-  Servo_Control_Init(1440,1000); // 初始化舵机控制，设置预分频器为1440，周期为1000
+  Servo1_Init();
+  Servo2_Init(); // 初始化舵机
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -102,8 +103,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    Motor_test(); // 测试电机
+    //Motor_test(); // 测试电机
     Servo_test(); // 测试舵机
+
   }
   /* USER CODE END 3 */
 }
