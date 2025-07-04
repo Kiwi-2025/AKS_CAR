@@ -4,12 +4,16 @@
 
 #ifndef SERVO_H
 #define SERVO_H
-void Servo_Control_Init(uint16_t Prescaler, uint16_t Period);
-void Servo_PWM_Init(uint16_t Prescaler, uint16_t Period);
-void Servo_SetAngle(uint16_t angle);
+void Servo1_Init(void);
+void Servo2_Init(void);
 
-void TIM_SetCompare_CH1(uint16_t Compare, TIM_TypeDef* TIMx);
-void TIM_SetCompare_CH2(uint16_t Compare, TIM_TypeDef* TIMx);
+void Servo_catch(void);     //抓取物体
+void Servo_turnUp(void);    //向上转动
+void Servo_turnDown(void);  //向下转动
+void Servo_put(void);       //放下物体
+
+void Servo1_SetAngle(uint16_t angle);
+void Servo2_SetAngle(uint16_t angle);
 
 void Servo_test(void);
 #endif //SERVO_H
