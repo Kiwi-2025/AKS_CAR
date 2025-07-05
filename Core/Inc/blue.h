@@ -9,6 +9,6 @@
 #ifndef AKS_CAR_CORE_INC_BLUE_H_
 #define AKS_CAR_CORE_INC_BLUE_H_
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size);
+// void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size);
 
 #endif /* AKS_CAR_CORE_INC_BLUE_H_ */
