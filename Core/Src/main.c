@@ -93,7 +93,13 @@ int main(void)
   MX_DMA_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
+  MX_TIM4_Init();
+  MX_TIM5_Init();
+  MX_TIM12_Init();
+  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
   // 初始化电机控制，周期为1000，使得电机转动速度可以的得到更加精准的控制
   Servo1_Init();
