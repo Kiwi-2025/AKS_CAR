@@ -6,9 +6,11 @@
 # include "motor.h"
 # include "tim.h"
 # include "usart.h"
+# include "blue.h"
 
 
 const double compute_factor =reduction_ratio*4*pulse_num*delay;
+extern uint8_t velocity_msg_test; // 用于测试的速度消息变量
 
 void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 启动TIM1通道1的PWM输出
@@ -123,7 +125,22 @@ void Motor_test(void) {
 
 // 测试函数，读取电机速度
 void Motor_Read_Speed_test(void) {
-    velocity_msg_test = read_right_front_feedback();
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
+    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
+    velocity_msg_test = (uint8_t)read_right_front_feedback();
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, velocity_msg_test);
+    HAL_Delay(1000);
 
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
+    velocity_msg_test = (uint8_t)read_right_front_feedback();
+    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, velocity_msg_test);
+    HAL_Delay(1000);
 
+    // 发送速度数据到电脑
+    // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test));
+    // HAL_UARTEx_ReceiveToIdle_DMA(&huart2, &velocity_msg_test, sizeof(velocity_msg_test)); // 重新开始接收数据
+    //__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT); // 禁用半传输中断以避免触发
 }

@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+int velocity_msg_test; // 用于测试的速度消息变量
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,6 +59,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    HAL_UART_Transmit_DMA(huart, (uint8_t*)velocity_msg_test, 4);
+
+    HAL_UART_Receive_DMA(huart, (uint8_t*)velocity_msg_test, 4);
+}
 
 /* USER CODE END 0 */
 
@@ -106,8 +111,11 @@ int main(void)
   // 初始化电机控制，周期为1000，使得电机转动速度可以的得到更加精准的控制
   Servo1_Init();
   Servo2_Init(); // 初始化舵机
+  Motor_Init();
+  __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
+  HAL_UART_Transmit_DMA(&huart2, (uint8_t*)velocity_msg_test, 4);
   /* USER CODE END 2 */
-  HAL_UARTEx_RxEventCallback(&huart2, sizeof(velocity_msg_test));
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -116,8 +124,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     //Motor_test(); // 测试电机
-    Servo_test(); // 测试舵机
-
+    //Servo_test(); // 测试舵机
+    Motor_Read_Speed_test(); // 测试读取电机速度
   }
   /* USER CODE END 3 */
 }

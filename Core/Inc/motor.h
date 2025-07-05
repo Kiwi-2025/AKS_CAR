@@ -8,7 +8,7 @@
 // some usefull constants
 #define reduction_ratio 21.3
 #define pulse_num 11.0
-#define diameter 65.0//mm
+#define diameter 65.0       //mm
 #define KP 0.9
 #define KI 0.3
 #define KD 0.1
@@ -23,8 +23,6 @@ extern int left_back_error, right_back_error;
 extern int left_front_error, right_front_error;
 
 // test used variants
-extern int velocity_msg_test;
-
 void Motor_Init(void);
 
 // Motor control functions
