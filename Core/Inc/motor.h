@@ -15,15 +15,15 @@
 #define pi 3.1416
 #define maxspeed 800
 
-int left_front_speed, right_front_speed;
-int left_back_speed, right_back_speed;
-int left_back_feedback,right_back_feedback;
-int left_front_feedback,right_front_feedback;
-int left_back_error, right_back_error;
-int left_front_error, right_front_error;
+extern int left_front_speed, right_front_speed;
+extern int left_back_speed, right_back_speed;
+extern int left_back_feedback,right_back_feedback;
+extern int left_front_feedback,right_front_feedback;
+extern int left_back_error, right_back_error;
+extern int left_front_error, right_front_error;
 
 // test used variants
-int velocity_msg_test;
+extern int velocity_msg_test;
 
 void Motor_Init(void);
 

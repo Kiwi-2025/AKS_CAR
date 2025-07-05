@@ -7,6 +7,7 @@
 # include "tim.h"
 # include "usart.h"
 
+
 const double compute_factor =reduction_ratio*4*pulse_num*delay;
 
 void Motor_Init(void) {

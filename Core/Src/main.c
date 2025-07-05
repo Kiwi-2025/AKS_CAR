@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 # include "motor.h"
 # include "servo.h"
+# include "blue.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,7 +107,7 @@ int main(void)
   Servo1_Init();
   Servo2_Init(); // 初始化舵机
   /* USER CODE END 2 */
-
+  HAL_UARTEx_RxEventCallback(&huart2, sizeof(velocity_msg_test));
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
