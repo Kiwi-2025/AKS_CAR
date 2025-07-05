@@ -5,6 +5,8 @@
 # include "main.h"
 # include "motor.h"
 # include "tim.h"
+# include "usart.h"
+
 const double compute_factor =reduction_ratio*4*pulse_num*delay;
 
 void Motor_Init(void) {
@@ -12,29 +14,36 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2); // 启动TIM1通道2的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 启动TIM1通道3的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4); // 启动TIM1通道4的PWM输出
+
+    HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // 启动TIM3的编码器模式
+    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // 启动TIM4的编码器模式
+    HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL); // 启动TIM5的编码器模式
+    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL); // 启动TIM8的编码器模式
+
+    HAL_TIM_Base_Start_IT((TIM_HandleTypeDef *)&htim7); // 启动TIM7的基本定时器中断
 }
 
 int read_left_front_feedback(void) {
-    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim2);	  //读取编码器数据
-	__HAL_TIM_SET_COUNTER(&htim2, 0); // 清零计数器
+    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
+	__HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
 	int speed = 1050 * diameter * pi * count_num / compute_factor;
 	return speed;
 }
 int read_right_front_feedback(void) {
-    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim2);	  //读取编码器数据
-    __HAL_TIM_SET_COUNTER(&htim2, 0); // 清零计数器
+    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim4);	  //读取编码器数据
+    __HAL_TIM_SET_COUNTER(&htim4, 0); // 清零计数器
     int speed = 1050 * diameter * pi * count_num / compute_factor;
     return speed;
 }
 int read_left_back_feedback(void) {
-    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim2);	  //读取编码器数据
-    __HAL_TIM_SET_COUNTER(&htim2, 0); // 清零计数器
+    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim5);	  //读取编码器数据
+    __HAL_TIM_SET_COUNTER(&htim5, 0); // 清零计数器
     int speed = 1050 * diameter * pi * count_num / compute_factor;
     return speed;
 }
 int read_right_back_feedback(void) {
-    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim2);	  //读取编码器数据
-    __HAL_TIM_SET_COUNTER(&htim2, 0); // 清零计数器
+    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim8);	  //读取编码器数据
+    __HAL_TIM_SET_COUNTER(&htim8, 0); // 清零计数器
     int speed = 1050 * diameter * pi * count_num / compute_factor;
     return speed;
 }
@@ -87,6 +96,7 @@ int right_back_PID(int target_speed, int speed, int *error) {
     return pwm_pid;
 }
 
+// 测试函数，控制电机前进、后退和停止
 void Motor_test(void) {
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 800); // 设置占空比为80%
   for (int state =0; state < 3 ; state++) {
@@ -110,6 +120,9 @@ void Motor_test(void) {
   }
 }
 
+// 测试函数，读取电机速度
 void Motor_Read_Speed_test(void) {
+    velocity_msg_test = read_right_front_feedback();
+
 
 }

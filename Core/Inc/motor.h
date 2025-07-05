@@ -22,6 +22,9 @@ int left_front_feedback,right_front_feedback;
 int left_back_error, right_back_error;
 int left_front_error, right_front_error;
 
+// test used variants
+int velocity_msg_test;
+
 void Motor_Init(void);
 
 // Motor control functions
