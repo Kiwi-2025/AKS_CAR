@@ -18,12 +18,12 @@ void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 启动TIM1通道3的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4); // 启动TIM1通道4的PWM输出
 
-    HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // 启动TIM3的编码器模式
-    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL); // 启动TIM4的编码器模式
-    HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL); // 启动TIM5的编码器模式
-    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL); // 启动TIM8的编码器模式
+    HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_1|TIM_CHANNEL_2); // 启动TIM3的编码器模式
+    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_1|TIM_CHANNEL_2); // 启动TIM4的编码器模式
+    HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_1|TIM_CHANNEL_2); // 启动TIM5的编码器模式
+    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_1|TIM_CHANNEL_2); // 启动TIM8的编码器模式
 
-    HAL_TIM_Base_Start_IT((TIM_HandleTypeDef *)&htim7); // 启动TIM7的基本定时器中断
+    HAL_TIM_Base_Start_IT(&htim7); // 启动TIM7的基本定时器中断
 }
 
 int read_left_front_feedback(void) {
@@ -100,6 +100,14 @@ int right_back_PID(int target_speed, int speed, int *error) {
 }
 
 // 测试函数，控制电机前进、后退和停止
+uint8_t read_rps(void) {
+    int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
+    __HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
+    uint8_t rps = count_num / 22 / 0.01 * 93; // 计算转速
+    return rps;
+}
+
+
 void Motor_test(void) {
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 800); // 设置占空比为80%
   for (int state =0; state < 3 ; state++) {
@@ -129,18 +137,12 @@ void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
     velocity_msg_test = (uint8_t)read_right_front_feedback();
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, velocity_msg_test);
     HAL_Delay(1000);
 
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
     velocity_msg_test = (uint8_t)read_right_front_feedback();
-    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, velocity_msg_test);
     HAL_Delay(1000);
 
-    // 发送速度数据到电脑
-    // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test));
-    // HAL_UARTEx_ReceiveToIdle_DMA(&huart2, &velocity_msg_test, sizeof(velocity_msg_test)); // 重新开始接收数据
-    //__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT); // 禁用半传输中断以避免触发
 }

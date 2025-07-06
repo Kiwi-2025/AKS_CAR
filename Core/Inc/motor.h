@@ -39,6 +39,7 @@ int right_back_PID(int target_speed,int speed,int *error);//calculate adjustment
 
 // test function
 void Motor_test(void);
+uint8_t read_rps(void); //
 void Motor_Read_Speed_test(void); // read the speed of 4 motors
 #endif //MOTOR_H
 
