@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t velocity_msg_test; // 用于测试的速度消息变量
+float velocity_msg_test; // 用于测试的速度消息变量
 char *msg = "S";
 /* USER CODE END PV */
 

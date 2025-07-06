@@ -100,10 +100,10 @@ int right_back_PID(int target_speed, int speed, int *error) {
 }
 
 // 测试函数，控制电机前进、后退和停止
-uint8_t read_rps(void) {
+float read_rps(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-    uint8_t rps = count_num / 22 / 0.01 * 93; // 计算转速
+    float rps = (float) count_num / 44 / 0.01 / 9.6; // 计算转速
     return rps;
 }
 
@@ -136,13 +136,13 @@ void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
-    velocity_msg_test = (uint8_t)read_right_front_feedback();
+    velocity_msg_test = read_rps();
     HAL_Delay(1000);
 
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
-    velocity_msg_test = (uint8_t)read_right_front_feedback();
+    velocity_msg_test = read_rps();
     HAL_Delay(1000);
 
 }
