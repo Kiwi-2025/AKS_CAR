@@ -6,6 +6,7 @@
 #define MOTOR_H
 
 // some usefull constants
+// TODO:更改这些数字
 #define reduction_ratio 21.3
 #define pulse_num 11.0
 #define diameter 65.0       //mm
