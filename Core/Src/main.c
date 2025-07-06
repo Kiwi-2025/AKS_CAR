@@ -25,6 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
+
 # include "motor.h"
 # include "servo.h"
 # include "blue.h"
@@ -49,7 +51,8 @@
 
 /* USER CODE BEGIN PV */
 float velocity_msg_test; // 用于测试的速度消息变量
-char *msg = "S";
+char *msg_test = "S";
+uint8_t message[5];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,6 +112,8 @@ int main(void)
   Servo2_Init(); // 初始化舵机
   Motor_Init();
   __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
+
+  // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,8 +126,10 @@ int main(void)
     //Motor_test(); // 测试电机
     //Servo_test(); // 测试舵机
     Motor_Read_Speed_test(); // 测试读取电机速度
-    HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg, sizeof(msg));
-    HAL_UART_Transmit_DMA(&huart2, &velocity_msg_test, sizeof(velocity_msg_test));
+    // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
+    // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
+    // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
+    ReturnToBlue(message, &velocity_msg_test);
     HAL_Delay(1000); // 延时1秒
   }
   /* USER CODE END 3 */

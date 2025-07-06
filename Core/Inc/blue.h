@@ -4,11 +4,17 @@
  *  Created on: Jul 5, 2025
  *      Author: sky
  */
+
+
+#ifndef BLUE_H
+#define BLUE_H
+
+#include "stm32f4xx_hal.h"
 #include "main.h"
+#include <stdio.h>
+#include <stdint.h>
 
-#ifndef AKS_CAR_CORE_INC_BLUE_H_
-#define AKS_CAR_CORE_INC_BLUE_H_
+extern UART_HandleTypeDef huart2;
+void ReturnToBlue(uint8_t msg[5], float *value);
 
-// void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size);
-
-#endif /* AKS_CAR_CORE_INC_BLUE_H_ */
+#endif //BLUE_H

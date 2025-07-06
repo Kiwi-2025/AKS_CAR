@@ -4,22 +4,22 @@
  *  Created on: Jul 5, 2025
  *      Author: sky
  */
+#include "blue.h"
 
+void ReturnToBlue(uint8_t msg[5], float *value) {
+    int integerPart = (int)(*value); // 提取整数部分
+    int decimalPart = (int)((*value - integerPart) * 10); // 提取第一个小数位
+    // 提取千、百、十、个位
+    int thousand = integerPart / 1000 % 10;
+    int hundred = integerPart / 100 % 10;
+    int ten = integerPart / 10 % 10;
+    int one = integerPart % 10;
+    // 转换为ASCII码
+    msg[0] = thousand + '0';
+    msg[1] = hundred + '0';
+    msg[2] = ten + '0';
+    msg[3] = one + '0';
+    msg[4] = decimalPart + '0'; // 第一个小数位转换为ASCII码
 
-// #include "blue.h"
-// #include "usart.h"
-// #include "dma.h"
-// #include "main.h"
-//
-// extern velocity_msg_test; // 用于测试的速度消息变量
-// extern hdma_usart2_rx;
-// void HAL_UART_RxCpltCall(UART_HandleTypeDef *huart, uint16_t Size)
-// {
-//     if (huart == &huart2) {
-//         // Process the received data
-//         HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, Size); // Echo back the received data
-//
-//         HAL_UARTEx_ReceiveToIdle_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test)); // Restart receiving data in interrupt mode
-//         __HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT); // Disable half-transfer interrupt to avoid triggering it
-//     }
-// }
+    HAL_UART_Transmit_DMA(&huart2, msg, 5);
+}

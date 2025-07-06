@@ -10,7 +10,7 @@
 
 
 const double compute_factor =reduction_ratio*4*pulse_num*delay;
-extern uint8_t velocity_msg_test; // 用于测试的速度消息变量
+extern float velocity_msg_test; // 用于测试的速度消息变量
 
 void Motor_Init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 启动TIM1通道1的PWM输出
@@ -103,7 +103,9 @@ int right_back_PID(int target_speed, int speed, int *error) {
 float read_rps(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-    float rps = (float) count_num / 44 / 0.01 / 9.6; // 计算转速
+    float rps = (float) ( 60 * count_num / 44 / 0.1 / 9.6); // 计算转速
+    // 转速 = 10ms内计数的脉冲数 / 44（每转44脉冲） / 0.01（10ms转换为秒） / 9.6（减速比）
+    // 如果需要转化为其他单位，应该进行适当转换
     return rps;
 }
 
@@ -136,13 +138,13 @@ void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
-    velocity_msg_test = read_rps();
-    HAL_Delay(1000);
+    //velocity_msg_test = (uint8_t)read_rps();
+    // HAL_Delay(5000);
 
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
-    velocity_msg_test = read_rps();
-    HAL_Delay(1000);
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
+     // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
+    //velocity_msg_test = (uint8_t)read_rps();
+    // HAL_Delay(5000);
 
 }
