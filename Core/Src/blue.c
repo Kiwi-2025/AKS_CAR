@@ -5,6 +5,7 @@
  *      Author: sky
  */
 #include "blue.h"
+#include "tim.h"
 
 void ReturnToBlue(uint8_t msg[7], float *value) {
     if (*value >= 0) {
@@ -26,6 +27,10 @@ void ReturnToBlue(uint8_t msg[7], float *value) {
     msg[3] = ten + '0';
     msg[4] = one + '0';
     msg[5] = decimalPart + '0'; // 第一个小数位转换为ASCII码
-    msg[6] = ((int)((*value - (int)(*value)) * 100) % 10) + '0';
+    msg[6] = ((int)((*value - integerPart) * 100) % 10) + '0';
     HAL_UART_Transmit_DMA(&huart2, msg, 7);
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+
 }

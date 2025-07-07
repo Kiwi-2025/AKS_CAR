@@ -42,7 +42,7 @@ int right_front_PID(int target_speed,int speed,int *error);//calculate adjustmen
 int left_back_PID(int target_speed,int speed,int *error);//calculate adjustment of left back motor speed
 int right_back_PID(int target_speed,int speed,int *error);//calculate adjustment of right back motor speed
 // Set the PWM of 4 motors
-void motor_PWM(int left_front_speed,int right_front_speed,int left_back_speed,int right_back_speed);
+void motor_vel(int left_front_speed,int right_front_speed,int left_back_speed,int right_back_speed);
 
 
 // test function

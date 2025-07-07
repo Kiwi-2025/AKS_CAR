@@ -100,7 +100,7 @@ int right_back_PID(int target_speed, int speed, int *error) {
     return pwm_pid;
 }
 
-void motor_PWM(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed) {
+void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed) {
     // 限制PWM占空比范围
     left_front_speed = left_front_speed > maxspeed ? maxspeed : left_front_speed;
     left_front_speed = left_front_speed < -maxspeed ? -maxspeed : left_front_speed;
@@ -111,11 +111,17 @@ void motor_PWM(int left_front_speed, int right_front_speed, int left_back_speed,
     right_back_speed = right_back_speed > maxspeed ? maxspeed : right_back_speed;
     right_back_speed = right_back_speed < -maxspeed ? -maxspeed : right_back_speed;
 
+    // 计算占空比
+    uint32_t left_front_duty = (uint32_t)(abs(left_front_speed)*5/2 /pi / diameter -366.9);
+    uint32_t right_front_duty = (uint32_t)(abs(right_front_speed)*5/2 /pi / diameter -366.9);
+    uint32_t left_back_duty = (uint32_t)(abs(left_back_speed)*5/2 /pi / diameter -366.9);
+    uint32_t right_back_duty = (uint32_t)(abs(right_back_speed)*5/2 /pi / diameter -366.9);
+
     // 设置PWM占空比
-    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_FRONT, (uint32_t)(abs(left_front_speed)));
-    __HAL_TIM_SET_COMPARE(&htim1, LEFT_FRONT, (uint32_t)(abs(right_front_speed)));
-    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_BACK, (uint32_t)(abs(left_back_speed)));
-    __HAL_TIM_SET_COMPARE(&htim1, LEFT_BACK, (uint32_t)(abs(right_back_speed)));
+    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_FRONT, right_front_duty);
+    __HAL_TIM_SET_COMPARE(&htim1, LEFT_FRONT, left_front_duty);
+    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_BACK, right_back_duty);
+    __HAL_TIM_SET_COMPARE(&htim1, LEFT_BACK, left_back_duty);
 }
 // 测试函数，控制电机前进、后退和停止
 float read_rpm(void) {
@@ -155,7 +161,7 @@ void Motor_test(void) {
 void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
-    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
+    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 200); // 设置PWM初始值为100%
     //velocity_msg_test = (uint8_t)read_rps();
     // HAL_Delay(5000);
 

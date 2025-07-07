@@ -35,4 +35,5 @@ void avoidance();  //避障总函数
 void fetchplace();  //自动取物放物控制函数
 void avoid_stop();
 
+void control_test(void); // 控制初始化函数
 #endif //CONTROL_H

@@ -44,7 +44,11 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+uint32_t time_counter =0;  // 用于计时的全局变量
+uint8_t flag_50ms = 0;     // 50毫秒标志位
+uint8_t flag_100ms = 0;    // 100毫秒标志位
+uint8_t flag_500ms = 0;    // 500毫秒标志位
+uint8_t flag_1s = 0;       // 1秒标志位
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -52,9 +56,7 @@
 /* USER CODE BEGIN PV */
 extern int left_front_target, right_front_target;
 extern int left_back_target, right_back_target;
-float velocity_msg_test; // 用于测试的速度消息变量
-char *msg_test = "S";
-uint8_t message[7];
+
 
 int left_front_speed, right_front_speed;
 int left_back_speed, right_back_speed;
@@ -63,6 +65,10 @@ int left_front_feedback,right_front_feedback;
 int left_back_error, right_back_error;
 int left_front_error, right_front_error;
 
+// variants used for testing
+float velocity_msg_test; // 用于测试的速度消息变量
+char *msg_test = "S";
+uint8_t message[7];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,26 +127,27 @@ int main(void)
   Servo1_Init();
   Servo2_Init(); // 初始化舵机
   Motor_Init();
-  __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
 
+  Motor_Read_Speed_test();
+  // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 1000);
   // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
+  // ReturnToBlue(message, &velocity_msg_test);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    //Motor_test(); // 测试电机
-    //Servo_test(); // 测试舵机
-    Motor_Read_Speed_test(); // 测试读取电机速度
+    // HAL_TIM_PeriodElapsedCallback(&htim7); // 调用定时器溢出回调函数
     // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
     // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
     // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
-    ReturnToBlue(message, &velocity_msg_test);
-    HAL_Delay(1000); // 延时1秒
+    velocity_msg_test = pi * diameter * read_rpm(); // 每次定时器溢出时读取一次转速
+    ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
+
+    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
@@ -192,33 +199,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  if (htim->Instance == TIM7) {
-    velocity_msg_test = read_rpm(); // 每次定时器溢出时读取一次转速
-
-    left_front_feedback = read_left_front_feedback();
-    right_front_feedback = read_right_front_feedback();
-    left_back_feedback = read_left_back_feedback();
-    right_back_feedback = read_right_back_feedback();
-    //获取当前速度
-
-    int left_front_diff = left_front_PID(left_front_target,left_front_feedback,&left_front_error);
-    int right_front_diff = right_front_PID(right_front_target,right_front_feedback,&right_front_error);
-    int left_back_diff = left_back_PID(left_back_target,left_back_feedback,&left_back_error);
-    int right_back_diff = right_back_PID(right_back_target,right_back_feedback,&right_back_error);
-
-    left_back_speed += left_back_diff;
-    right_back_speed += right_back_diff;
-    left_front_speed += left_front_diff;
-    right_front_speed += right_front_diff;
-
-    if(left_front_target == 0 && left_front_feedback ==0){left_front_speed = 0;}
-    if(right_front_target == 0 && right_front_feedback ==0){right_front_speed = 0;}
-    if(left_back_target == 0 && left_back_feedback ==0){left_back_speed = 0;}
-    if(right_back_target == 0 && right_back_feedback ==0){right_back_speed = 0;}
-    //将PID处理后的目标速度写入系统
-    motor_PWM(left_front_speed,right_front_speed,left_back_speed,right_back_speed);
-  }
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 }
 /* USER CODE END 4 */
 
