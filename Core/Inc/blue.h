@@ -15,6 +15,6 @@
 #include <stdint.h>
 
 extern UART_HandleTypeDef huart2;
-void ReturnToBlue(uint8_t msg[5], float *value);
+void ReturnToBlue(uint8_t msg[7], float *value);
 
 #endif //BLUE_H

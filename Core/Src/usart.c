@@ -278,10 +278,5 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim->Instance == TIM7) {
-      velocity_msg_test = read_rps(); // 每次定时器溢出时读取一次转速
-  }
-}
+
 /* USER CODE END 1 */

@@ -6,15 +6,19 @@
 #define MOTOR_H
 
 // some usefull constants
-// TODO:更改这些数字
-#define reduction_ratio 21.3
-#define pulse_num 11.0
-#define diameter 65.0       //mm
+#define reduction_ratio 9.6 // 9.6:1
+#define pulse_num 44.0
+#define diameter 65.0       // 车轮直径 mm
 #define KP 0.9
 #define KI 0.3
 #define KD 0.1
 #define pi 3.1416
 #define maxspeed 800
+
+#define RIGHT_FRONT TIM_CHANNEL_1
+#define LEFT_FRONT TIM_CHANNEL_2
+#define RIGHT_BACK TIM_CHANNEL_3
+#define LEFT_BACK TIM_CHANNEL_4
 
 extern int left_front_speed, right_front_speed;
 extern int left_back_speed, right_back_speed;
@@ -37,10 +41,13 @@ int left_front_PID(int target_speed,int speed,int *error);//calculate adjustment
 int right_front_PID(int target_speed,int speed,int *error);//calculate adjustment of right front motor speed
 int left_back_PID(int target_speed,int speed,int *error);//calculate adjustment of left back motor speed
 int right_back_PID(int target_speed,int speed,int *error);//calculate adjustment of right back motor speed
+// Set the PWM of 4 motors
+void motor_PWM(int left_front_speed,int right_front_speed,int left_back_speed,int right_back_speed);
+
 
 // test function
 void Motor_test(void);
-float read_rps(void); //
+float read_rpm(void); //
 void Motor_Read_Speed_test(void); // read the speed of 4 motors
 #endif //MOTOR_H
 

@@ -59,7 +59,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-# define delay 50.0
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

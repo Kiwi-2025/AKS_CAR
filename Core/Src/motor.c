@@ -4,12 +4,12 @@
 
 # include "main.h"
 # include "motor.h"
+#include <stdlib.h>
 # include "tim.h"
-# include "usart.h"
+// # include "usart.h"
 # include "blue.h"
 
 
-const double compute_factor =reduction_ratio*4*pulse_num*delay;
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
 void Motor_Init(void) {
@@ -29,26 +29,30 @@ void Motor_Init(void) {
 int read_left_front_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
 	__HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-	int speed = 1050 * diameter * pi * count_num / compute_factor;
-	return speed;
+    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    speed = speed * diameter * pi;                            // 转化为mm/s
+	return (int)speed;
 }
 int read_right_front_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim4);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim4, 0); // 清零计数器
-    int speed = 1050 * diameter * pi * count_num / compute_factor;
-    return speed;
+    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    speed = speed * diameter * pi;                            // 转化为mm/s
+    return (int)speed;
 }
 int read_left_back_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim5);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim5, 0); // 清零计数器
-    int speed = 1050 * diameter * pi * count_num / compute_factor;
-    return speed;
+    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    speed = speed * diameter * pi;                            // 转化为mm/s
+    return (int)speed;
 }
 int read_right_back_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim8);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim8, 0); // 清零计数器
-    int speed = 1050 * diameter * pi * count_num / compute_factor;
-    return speed;
+    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    speed = speed * diameter * pi;                            // 转化为mm/s
+    return (int)speed;
 }
 
 int left_front_PID(int target_speed, int speed, int *error) {
@@ -62,7 +66,6 @@ int left_front_PID(int target_speed, int speed, int *error) {
     left_front_error_last = left_front_error;	              // 保存上次偏差
     return pwm_pid;
 }
-
 int right_front_PID(int target_speed, int speed, int *error) {
     int right_front_error = target_speed - speed;
     static int right_front_error_last = 0,right_front_error_before = 0;
@@ -74,7 +77,6 @@ int right_front_PID(int target_speed, int speed, int *error) {
     right_front_error_last = right_front_error;	              // 保存上次偏差
     return pwm_pid;
 }
-
 int left_back_PID(int target_speed, int speed, int *error) {
     int left_back_error = target_speed - speed;
     static int left_back_error_last = 0,left_back_error_before = 0;
@@ -86,7 +88,6 @@ int left_back_PID(int target_speed, int speed, int *error) {
     left_back_error_last = left_back_error;	              // 保存上次偏差
     return pwm_pid;
 }
-
 int right_back_PID(int target_speed, int speed, int *error) {
     int right_back_error = target_speed - speed;
     static int right_back_error_last = 0,right_back_error_before = 0;
@@ -99,14 +100,31 @@ int right_back_PID(int target_speed, int speed, int *error) {
     return pwm_pid;
 }
 
+void motor_PWM(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed) {
+    // 限制PWM占空比范围
+    left_front_speed = left_front_speed > maxspeed ? maxspeed : left_front_speed;
+    left_front_speed = left_front_speed < -maxspeed ? -maxspeed : left_front_speed;
+    right_front_speed = right_front_speed > maxspeed ? maxspeed : right_front_speed;
+    right_front_speed = right_front_speed < -maxspeed ? -maxspeed : right_front_speed;
+    left_back_speed = left_back_speed > maxspeed ? maxspeed : left_back_speed;
+    left_back_speed = left_back_speed < -maxspeed ? -maxspeed : left_back_speed;
+    right_back_speed = right_back_speed > maxspeed ? maxspeed : right_back_speed;
+    right_back_speed = right_back_speed < -maxspeed ? -maxspeed : right_back_speed;
+
+    // 设置PWM占空比
+    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_FRONT, (uint32_t)(abs(left_front_speed)));
+    __HAL_TIM_SET_COMPARE(&htim1, LEFT_FRONT, (uint32_t)(abs(right_front_speed)));
+    __HAL_TIM_SET_COMPARE(&htim1, RIGHT_BACK, (uint32_t)(abs(left_back_speed)));
+    __HAL_TIM_SET_COMPARE(&htim1, LEFT_BACK, (uint32_t)(abs(right_back_speed)));
+}
 // 测试函数，控制电机前进、后退和停止
-float read_rps(void) {
+float read_rpm(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-    float rps = (float) ( 60 * count_num / 44 / 0.1 / 9.6); // 计算转速
+    float rpm = (float) ( 60 * count_num / 44 / 0.1 / 9.6); // 计算转速
     // 转速 = 10ms内计数的脉冲数 / 44（每转44脉冲） / 0.01（10ms转换为秒） / 9.6（减速比）
     // 如果需要转化为其他单位，应该进行适当转换
-    return rps;
+    return rpm;
 }
 
 
