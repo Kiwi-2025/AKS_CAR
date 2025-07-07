@@ -4,27 +4,26 @@
 
 #ifndef CONTROL_H
 #define CONTROL_H
-int targetspeed;
-int left_front_target, right_front_target;
-int left_back_target, right_back_target;
-int curvature;
-double curv_error;
-extern double deviation;
-extern double deviation_f;
-extern int deviation_s;
-short is_fetch;
-short is_down;
-short is_shut;
-short is_groundturn;
-short is_stopping;
-short avoid_dir;
-short avoid_comfirm;
-short turn_flag;
-short stop_flag;
-short check_flag;
-short back_flag;
-int total_distance;
-short turn_target;
+//int targetspeed;
+extern int left_front_target, right_front_target, left_back_target, right_back_target;
+// int curvature;
+// double curv_error;
+// extern double deviation;
+// extern double deviation_f;
+// extern int deviation_s;
+// short is_fetch;
+// short is_down;
+// short is_shut;
+// short is_groundturn;
+// short is_stopping;
+// short avoid_dir;
+// short avoid_comfirm;
+// short turn_flag;
+// short stop_flag;
+// short check_flag;
+// short back_flag;
+// int total_distance;
+// short turn_target;
 
 double roundPID(double targetposition,double position,double *error); //寻线误差的PID计算函数
 void setspeed(int targetspeed,int curvature);  //根据运动需求设置两轮转速

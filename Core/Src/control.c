@@ -5,8 +5,8 @@
 # include "motor.h"
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
-void control_test() {
-    velocity_msg_test = read_rpm(); // 每次定时器溢出时读取一次转速
+void control_test(void) {
+    // velocity_msg_test = read_rpm(); // 每次定时器溢出时读取一次转速
 
     left_front_feedback = read_left_front_feedback();
     right_front_feedback = read_right_front_feedback();
@@ -29,5 +29,5 @@ void control_test() {
     if(left_back_target == 0 && left_back_feedback ==0){left_back_speed = 0;}
     if(right_back_target == 0 && right_back_feedback ==0){right_back_speed = 0;}
     //将PID处理后的目标速度写入系统
-    motor_PWM(left_front_speed,right_front_speed,left_back_speed,right_back_speed);
+    motor_vel(left_front_speed,right_front_speed,left_back_speed,right_back_speed);
 }

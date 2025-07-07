@@ -30,6 +30,7 @@
 # include "motor.h"
 # include "servo.h"
 # include "blue.h"
+# include "control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,25 +45,21 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-uint32_t time_counter =0;  // 用于计时的全局变量
-uint8_t flag_50ms = 0;     // 50毫秒标志位
-uint8_t flag_100ms = 0;    // 100毫秒标志位
-uint8_t flag_500ms = 0;    // 500毫秒标志位
-uint8_t flag_1s = 0;       // 1秒标志位
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern int left_front_target, right_front_target;
-extern int left_back_target, right_back_target;
+int left_front_target, right_front_target;
+int left_back_target, right_back_target;
 
 
 int left_front_speed, right_front_speed;
 int left_back_speed, right_back_speed;
 int left_back_feedback,right_back_feedback;
 int left_front_feedback,right_front_feedback;
-int left_back_error, right_back_error;
+int left_back_error, right_back_error ;
 int left_front_error, right_front_error;
 
 // variants used for testing
@@ -90,7 +87,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  left_front_target = 1600; // 设置前左电机目标速度
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -129,6 +126,11 @@ int main(void)
   Motor_Init();
 
   Motor_Read_Speed_test();
+  // motor_vel(1000,1000,1000,1000  );
+  left_front_speed = read_left_front_feedback();
+  right_front_speed = read_right_front_feedback();
+  left_back_speed = read_left_back_feedback();
+  right_back_speed = read_right_back_feedback();
   // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 1000);
   // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
   // ReturnToBlue(message, &velocity_msg_test);
@@ -144,9 +146,10 @@ int main(void)
     // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
     // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
     // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
-    velocity_msg_test = pi * diameter * read_rpm(); // 每次定时器溢出时读取一次转速
+    // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
+    velocity_msg_test = left_front_speed; // 读取前左电机的速度
     ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
-
+    control_test();
     HAL_Delay(100);
   }
   /* USER CODE END 3 */
@@ -199,8 +202,8 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-}
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+// }
 /* USER CODE END 4 */
 
 /**

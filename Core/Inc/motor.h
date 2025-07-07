@@ -15,10 +15,10 @@
 #define pi 3.1416
 #define maxspeed 800
 
-#define RIGHT_FRONT TIM_CHANNEL_1
-#define LEFT_FRONT TIM_CHANNEL_2
-#define RIGHT_BACK TIM_CHANNEL_3
-#define LEFT_BACK TIM_CHANNEL_4
+#define LEFT_FRONT TIM_CHANNEL_1
+#define RIGHT_FRONT TIM_CHANNEL_2
+#define LEFT_BACK TIM_CHANNEL_3
+#define RIGHT_BACK TIM_CHANNEL_4
 
 extern int left_front_speed, right_front_speed;
 extern int left_back_speed, right_back_speed;
@@ -47,7 +47,7 @@ void motor_vel(int left_front_speed,int right_front_speed,int left_back_speed,in
 
 // test function
 void Motor_test(void);
-float read_rpm(void); //
+float read_omega(void); //
 void Motor_Read_Speed_test(void); // read the speed of 4 motors
 #endif //MOTOR_H
 
