@@ -53,6 +53,14 @@
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
 uint8_t message[5];
+
+uint32_t upEdge = 0;      // 存储上升沿时间
+uint32_t downEdge = 0;    // 存储下降沿时间
+float distance = 0;       // 计算得到的距离(cm)
+uint8_t measurementComplete = 0;  // 测量完成标志
+uint8_t msg_sonic[5];
+uint32_t lastTriggerTime = 0;
+const uint32_t triggerInterval = 50; // 触发间隔(ms)
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,6 +119,7 @@ int main(void)
   Servo1_Init();
   Servo2_Init(); // 初始化舵机
   Motor_Init();
+  Servo1_Init();
   __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 800); // 设置PWM初始值为80%
 
   // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
@@ -126,6 +135,7 @@ int main(void)
     //Motor_test(); // 测试电机
     //Servo_test(); // 测试舵机
     Motor_Read_Speed_test(); // 测试读取电机速度
+    Measure_Sonic(&htim2, &upEdge, &downEdge); // 测量超声波距离
     // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
     // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
     // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))

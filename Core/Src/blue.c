@@ -22,4 +22,8 @@ void ReturnToBlue(uint8_t msg[5], float *value) {
     msg[4] = decimalPart + '0'; // 第一个小数位转换为ASCII码
 
     HAL_UART_Transmit_DMA(&huart2, msg, 5);
+};
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+
 }
