@@ -6,14 +6,14 @@
 #define MOTOR_H
 
 // some usefull constants
-#define reduction_ratio 9.6 // 9.6:1
+#define reduction_ratio 21.3 // 9.6:1
 #define pulse_num 44.0
 #define diameter 65.0       // 车轮直径 mm
-#define KP 0.9
-#define KI 0.3
-#define KD 0.1
+#define KP 0.38
+#define KI 0.00171
+#define KD 0
 #define pi 3.1416
-#define maxspeed 800
+#define maxspeed 1600 // 最大速度
 
 #define LEFT_FRONT TIM_CHANNEL_1
 #define RIGHT_FRONT TIM_CHANNEL_2
@@ -32,10 +32,10 @@ void Motor_Init(void);
 
 // Motor control functions
 // Read the feedback from 4 motors encoders
-int read_left_front_feedback(void);//read the left front motor's encoder
-int read_right_front_feedback(void);//read the right front motor's encoder
-int read_left_back_feedback(void);//read the left back motor's encoder
-int read_right_back_feedback(void);//read the right back motor's encoder
+float read_left_front_feedback(void);//read the left front motor's encoder
+float read_right_front_feedback(void);//read the right front motor's encoder
+float read_left_back_feedback(void);//read the left back motor's encoder
+float read_right_back_feedback(void);//read the right back motor's encoder
 // Use PID method to set the speed of 4 motors
 int left_front_PID(int target_speed,int speed,int *error);//calculate adjustment of left front motor speed
 int right_front_PID(int target_speed,int speed,int *error);//calculate adjustment of right front motor speed

@@ -87,7 +87,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  left_front_target = 1600; // 设置前左电机目标速度
+  left_front_target = 200; // 设置前左电机目标速度
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -147,7 +147,8 @@ int main(void)
     // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
     // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
     // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
-    velocity_msg_test = left_front_speed; // 读取前左电机的速度
+    velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
+    // velocity_msg_test =
     ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
     control_test();
     HAL_Delay(100);

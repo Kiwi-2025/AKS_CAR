@@ -26,33 +26,33 @@ void Motor_Init(void) {
     HAL_TIM_Base_Start_IT(&htim7); // 启动TIM7的基本定时器中断
 }
 
-int read_left_front_feedback(void) {
+float read_left_front_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
 	__HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    float speed = (float) (count_num / 44 / 0.1 / reduction_ratio);       //rps
     speed = speed * diameter * pi;                            // 转化为mm/s
-	return (int)speed;
+	return speed;
 }
-int read_right_front_feedback(void) {
+float read_right_front_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim4);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim4, 0); // 清零计数器
-    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    float speed = (float) (count_num / 44 / 0.1 / reduction_ratio);       //rps
     speed = speed * diameter * pi;                            // 转化为mm/s
-    return (int)speed;
+    return speed;
 }
-int read_left_back_feedback(void) {
+float read_left_back_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim5);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim5, 0); // 清零计数器
-    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    float speed = (float) (count_num / 44 / 0.1 / reduction_ratio);       //rps
     speed = speed * diameter * pi;                            // 转化为mm/s
-    return (int)speed;
+    return speed;
 }
-int read_right_back_feedback(void) {
+float read_right_back_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim8);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim8, 0); // 清零计数器
-    float speed = (float) (count_num / 44 / 0.1 / 9.6);       //rps
+    float speed = (float) (count_num / 44 / 0.1 / reduction_ratio);       //rps
     speed = speed * diameter * pi;                            // 转化为mm/s
-    return (int)speed;
+    return speed;
 }
 
 int left_front_PID(int target_speed, int speed, int *error) {
@@ -117,10 +117,10 @@ void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed,
 
     // 计算占空比
 
-    uint32_t left_front_duty = (uint32_t)(abs(left_front_speed) * 0.942 - 600);
-    uint32_t right_front_duty = (uint32_t)(abs(right_front_speed) * 0.942 - 600);
-    uint32_t left_back_duty = (uint32_t)(abs(left_back_speed) * 0.942 - 600);
-    uint32_t right_back_duty = (uint32_t)(abs(right_back_speed) * 0.942 - 600);
+    uint32_t left_front_duty = (uint32_t)(abs(left_front_speed) * 113.0 + 1700.0)/10.0;
+    uint32_t right_front_duty = (uint32_t)(abs(right_front_speed) * 113.0 + 1700.0)/10.0;
+    uint32_t left_back_duty = (uint32_t)(abs(left_back_speed) * 113.0 + 1700.0)/10.0;
+    uint32_t right_back_duty = (uint32_t)(abs(right_back_speed) * 113.0 + 1700.0)/10.0;
 
     // 设置PWM占空比
     // #define LEFT_FRONT TIM_CHANNEL_1
@@ -137,8 +137,8 @@ void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed,
 float read_omega(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
     __HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
-    float rpm = (float) (count_num / 44 / 0.1 / 9.6); // 计算转速
-    // 转速 = 10ms内计数的脉冲数 / 44（每转44脉冲） / 0.01（10ms转换为秒） / 9.6（减速比）
+    float rpm = (float) (60 * count_num / 44 / 0.1 / reduction_ratio); // 计算转速
+    // 转速 = 10ms内计数的脉冲数 / 44（每转44脉冲） / 0.01（10ms转换为秒） /21.3（减速比）
     // 如果需要转化为其他单位，应该进行适当转换
     return rpm;
 }
@@ -171,7 +171,7 @@ void Motor_test(void) {
 void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
-    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 400); // 设置PWM初始值为100%
+    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 100); // 设置PWM初始值为100%
     //velocity_msg_test = (uint8_t)read_rps();
     // HAL_Delay(5000);
 
