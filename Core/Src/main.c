@@ -66,6 +66,7 @@ int left_front_error, right_front_error;
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
 uint8_t message[7];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -125,6 +126,7 @@ int main(void)
   Servo2_Init(); // 初始化舵机
   Motor_Init();
 
+
   Motor_Read_Speed_test();
   // motor_vel(1000,1000,1000,1000  );
   left_front_speed = read_left_front_feedback();
@@ -142,7 +144,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+    //Motor_test(); // 测试电机
+    //Servo_test(); // 测试舵机
+
     // HAL_TIM_PeriodElapsedCallback(&htim7); // 调用定时器溢出回调函数
+
     // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
     // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
     // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))

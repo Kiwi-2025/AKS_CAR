@@ -31,6 +31,3 @@ void ReturnToBlue(uint8_t msg[7], float *value) {
     HAL_UART_Transmit_DMA(&huart2, msg, 7);
 }
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-
-}
