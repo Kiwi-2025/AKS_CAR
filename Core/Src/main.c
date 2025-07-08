@@ -66,7 +66,13 @@ int left_front_error, right_front_error;
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
 uint8_t message[7];
-
+uint32_t upEdge = 0;      // 存储上升沿时间
+uint32_t downEdge = 0;    // 存储下降沿时间
+float distance = 0;       // 计算得到的距离(cm)
+uint8_t measurementComplete = 0;  // 测量完成标志
+uint8_t msg_sonic[5];
+uint32_t lastTriggerTime = 0;
+const uint32_t triggerInterval = 50; // 触发间隔(ms)
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
