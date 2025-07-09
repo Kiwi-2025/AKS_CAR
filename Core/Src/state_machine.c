@@ -34,10 +34,7 @@ void StateMachine_Update(void) {
     StateMachine_HandleState(current_state, event);
 }
 
-// 事件检测函数
-CarEvent_t StateMachine_GetEvent(SensorData_t *data) {
-    return EVENT_NONE;
-}
+
 
 // 状态处理函数
 void StateMachine_HandleState(CarState_t state, CarEvent_t event) {

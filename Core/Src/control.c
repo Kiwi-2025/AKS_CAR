@@ -15,7 +15,7 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
     if (fabs(turn_angle_rad) < 0.001f) {
         curvature_radius = 1e6f; // 近似直线
     } else {
-        curvature_radius = wheelbase / tanf(turn_angle_rad);
+        //curvature_radius = wheel_base  tanf(turn_angle_rad);
     }
 
     // 特殊情况：纯直线运动
@@ -41,18 +41,6 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
     // 假设小车几何中心的速度方向沿 x 轴
     float icr_x = 0;
     float icr_y = curvature_radius;
-
-    // 计算各轮子到转向中心的距离
-    float r_lf = sqrtf(powf(lf_x - icr_x, 2) + powf(lf_y - icr_y, 2));
-    float r_rf = sqrtf(powf(rf_x - icr_x, 2) + powf(rf_y - icr_y, 2));
-    float r_lb = sqrtf(powf(lb_x - icr_x, 2) + powf(lb_y - icr_y, 2));
-    float r_rb = sqrtf(powf(rb_x - icr_x, 2) + powf(rb_y - icr_y, 2));
-
-    // 计算各轮子的线速度 v = ω × r
-    left_front_target   = angular_velocity * r_lf;
-    right_front_target  = angular_velocity * r_rf;
-    left_back_target    = angular_velocity * r_lb;
-    right_back_target   = angular_velocity * r_rb;
 
     // 考虑转向方向的符号修正
     if (curvature_radius > 0) {

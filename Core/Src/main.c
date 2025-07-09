@@ -54,7 +54,6 @@
 int left_front_target, right_front_target;
 int left_back_target, right_back_target;
 
-
 int left_front_speed, right_front_speed;
 int left_back_speed, right_back_speed;
 int left_back_feedback,right_back_feedback;
@@ -94,7 +93,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  left_front_target = 200; // 设置前左电机目标速度
+  // left_front_target = 200; // 设置前左电机目标速度
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -133,12 +132,12 @@ int main(void)
   Motor_Init();
 
 
-  Motor_Read_Speed_test();
+  // Motor_Read_Speed_test();
   // motor_vel(1000,1000,1000,1000  );
-  left_front_speed = read_left_front_feedback();
-  right_front_speed = read_right_front_feedback();
-  left_back_speed = read_left_back_feedback();
-  right_back_speed = read_right_back_feedback();
+  // left_front_speed = read_left_front_feedback();
+  // right_front_speed = read_right_front_feedback();
+  // left_back_speed = read_left_back_feedback();
+  // right_back_speed = read_right_back_feedback();
   // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 1000);
   // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
   // ReturnToBlue(message, &velocity_msg_test);
@@ -150,11 +149,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-    velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
-    ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
+    // Servo_test();
+    // velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
+    // ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
     // control_test();
-    HAL_Delay(100);
+    // Servo1_SetAngle(0);
+
   }
   /* USER CODE END 3 */
 }
