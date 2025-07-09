@@ -3,9 +3,70 @@
 //
 # include "control.h"
 # include "motor.h"
+#include <math.h>
+
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
-void control_test(void) {
+void set_speed(float linear_velocity, float turn_angle_degrees) {
+    float turn_angle_rad = turn_angle_degrees * pi / 180.0f;
+    float curvature_radius;
+
+    // 将转动角度转化为转弯半径
+    if (fabs(turn_angle_rad) < 0.001f) {
+        curvature_radius = 1e6f; // 近似直线
+    } else {
+        curvature_radius = wheelbase / tanf(turn_angle_rad);
+    }
+
+    // 特殊情况：纯直线运动
+    if (fabs(turn_angle_rad) < 0.001f) {
+        left_front_target   =   linear_velocity;
+        right_front_target  =   linear_velocity;
+        left_back_target    =   linear_velocity;
+        right_back_target   =   linear_velocity;
+    }
+    // 特殊情况：保持静止
+    if (fabs(linear_velocity) < 0.001f) {
+        // 静止状态
+        left_front_target   =   0;
+        right_front_target  =   0;
+        left_back_target    =   0;
+        right_back_target   =   0;
+    }
+
+    // 计算角速度 ω = v / R
+    float angular_velocity = linear_velocity / curvature_radius;
+
+    // 计算转向中心 (ICR - Instantaneous Center of Rotation)
+    // 假设小车几何中心的速度方向沿 x 轴
+    float icr_x = 0;
+    float icr_y = curvature_radius;
+
+    // 计算各轮子到转向中心的距离
+    float r_lf = sqrtf(powf(lf_x - icr_x, 2) + powf(lf_y - icr_y, 2));
+    float r_rf = sqrtf(powf(rf_x - icr_x, 2) + powf(rf_y - icr_y, 2));
+    float r_lb = sqrtf(powf(lb_x - icr_x, 2) + powf(lb_y - icr_y, 2));
+    float r_rb = sqrtf(powf(rb_x - icr_x, 2) + powf(rb_y - icr_y, 2));
+
+    // 计算各轮子的线速度 v = ω × r
+    left_front_target   = angular_velocity * r_lf;
+    right_front_target  = angular_velocity * r_rf;
+    left_back_target    = angular_velocity * r_lb;
+    right_back_target   = angular_velocity * r_rb;
+
+    // 考虑转向方向的符号修正
+    if (curvature_radius > 0) {
+        // 左转：左侧轮子速度较小，右侧轮子速度较大
+        // 速度符号已经通过几何计算自动处理
+    } else {
+        // 右转：右侧轮子速度较小，左侧轮子速度较大
+        // 速度符号已经通过几何计算自动处理
+    }
+    motor_pid_control();
+}
+
+// 测试函数
+void motor_pid_control(void) {
     // velocity_msg_test = read_rpm(); // 每次定时器溢出时读取一次转速
 
     left_front_feedback = read_left_front_feedback();

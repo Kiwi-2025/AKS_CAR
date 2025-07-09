@@ -26,6 +26,7 @@ void Motor_Init(void) {
     HAL_TIM_Base_Start_IT(&htim7); // 启动TIM7的基本定时器中断
 }
 
+/* 硬件抽象 -------------------------------------------------------------*/
 float read_left_front_feedback(void) {
     int count_num =(short)__HAL_TIM_GET_COUNTER(&htim3);	  //读取编码器数据
 	__HAL_TIM_SET_COUNTER(&htim3, 0); // 清零计数器
@@ -142,7 +143,6 @@ float read_omega(void) {
     // 如果需要转化为其他单位，应该进行适当转换
     return rpm;
 }
-
 
 void Motor_test(void) {
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 800); // 设置占空比为80%

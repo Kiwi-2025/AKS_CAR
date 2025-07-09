@@ -20,11 +20,11 @@ typedef enum {
 // 事件类型枚举
 typedef enum {
     EVENT_NONE,
-    EVENT_OBSTACLE_DETECTED,    // 检测到障碍物
-    EVENT_OBSTACLE_CLEARED,     // 障碍物清除
-    EVENT_BLUETOOTH_COMMAND,    // 蓝牙命令
-    EVENT_TIMEOUT,             // 超时事件
-    EVENT_EMERGENCY_STOP       // 紧急停止
+    EVENT_TASK1_BEGIN,      // 接收到任务1：巡线 开始事件
+    EVENT_TASK2_BEGIN,      // 接收到任务2：避障 开始事件
+
+    EVENT_IS_FETCH,         // 抓取到物体
+    EVENT_OBSERVE_GOAL     // 观察到结束目标
 } CarEvent_t;
 
 // 传感器数据结构

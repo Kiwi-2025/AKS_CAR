@@ -151,19 +151,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-    //Motor_test(); // 测试电机
-    //Servo_test(); // 测试舵机
-
-    // HAL_TIM_PeriodElapsedCallback(&htim7); // 调用定时器溢出回调函数
-
-    // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
-    // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
-    // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
-    // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
     velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
-    // velocity_msg_test =
     ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
-    control_test();
+    // control_test();
     HAL_Delay(100);
   }
   /* USER CODE END 3 */

@@ -30,7 +30,7 @@ extern int left_front_error, right_front_error;
 // test used variants
 void Motor_Init(void);
 
-// Motor control functions
+/* 硬件抽象 -------------------------------------------------------------*/
 // Read the feedback from 4 motors encoders
 float read_left_front_feedback(void);//read the left front motor's encoder
 float read_right_front_feedback(void);//read the right front motor's encoder
