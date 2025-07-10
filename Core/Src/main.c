@@ -145,6 +145,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /* USER CODE END 3 */
   while (1) {
     /* USER CODE END WHILE */
 
@@ -154,9 +155,16 @@ int main(void)
     // ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
     // control_test();
     // Servo1_SetAngle(0);
-
+    // Servo1_SetAngle(5);
+    // HAL_Delay(1000);
+    // Servo_catch();
+    // Servo_turnUp();
+    // HAL_Delay(1000);
+    // Servo_turnDown();
+    // HAL_Delay(1000);
+    // Servo_put();
+    // HAL_Delay(1000);
   }
-  /* USER CODE END 3 */
 }
 
 /**
