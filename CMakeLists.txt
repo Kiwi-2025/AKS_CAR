@@ -77,3 +77,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
+
+# 给CubeMx生成的CMakeLists.txt的目标${CMAKE_PROJECT_NAME}添加编译参数
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+        -u _printf_float
+)

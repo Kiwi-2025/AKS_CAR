@@ -55,8 +55,6 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
 
 // 测试函数
 void motor_pid_control(void) {
-    // velocity_msg_test = read_rpm(); // 每次定时器溢出时读取一次转速
-
     left_front_feedback = read_left_front_feedback();
     right_front_feedback = read_right_front_feedback();
     left_back_feedback = read_left_back_feedback();

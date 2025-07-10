@@ -116,8 +116,9 @@ void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed,
     // right_back_speed = right_back_speed > maxspeed ? maxspeed : right_back_speed;
     // right_back_speed = right_back_speed < -maxspeed ? -maxspeed : right_back_speed;
 
-    // 计算占空比
+    // 判断前进方向，控制
 
+    // 计算占空比
     uint32_t left_front_duty = (uint32_t)(abs(left_front_speed) * 113.0 + 1700.0)/10.0;
     uint32_t right_front_duty = (uint32_t)(abs(right_front_speed) * 113.0 + 1700.0)/10.0;
     uint32_t left_back_duty = (uint32_t)(abs(left_back_speed) * 113.0 + 1700.0)/10.0;
@@ -172,13 +173,5 @@ void Motor_Read_Speed_test(void) {
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 100); // 设置PWM初始值为100%
-    //velocity_msg_test = (uint8_t)read_rps();
-    // HAL_Delay(5000);
-
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET);
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
-     // __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 300); // 设置占空比为30%
-    //velocity_msg_test = (uint8_t)read_rps();
-    // HAL_Delay(5000);
 
 }

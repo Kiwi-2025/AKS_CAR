@@ -31,6 +31,7 @@
 # include "servo.h"
 # include "blue.h"
 # include "control.h"
+#include "sonic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,8 +55,8 @@
 int left_front_target, right_front_target;
 int left_back_target, right_back_target;
 
-int left_front_speed, right_front_speed;
-int left_back_speed, right_back_speed;
+float left_front_speed, right_front_speed;
+float left_back_speed, right_back_speed;
 int left_back_feedback,right_back_feedback;
 int left_front_feedback,right_front_feedback;
 int left_back_error, right_back_error ;
@@ -65,16 +66,10 @@ int left_front_error, right_front_error;
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
 
-char buffer[100]; // 用于存储发送到蓝牙的数据
-// 定义键值对结构
-typedef struct {
-    const char *name;
-    float value;
-} NameValuePair;
+char msg[1024]; // 用于存储发送到蓝牙的数据
 
-NameValuePair name_value_pairs[] = {}; // 用于存储键值对的数组
-int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
-uint8_t message[7];
+// int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
+
 uint32_t upEdge = 0;      // 存储上升沿时间
 uint32_t downEdge = 0;    // 存储下降沿时间
 float distance = 0;       // 计算得到的距离(cm)
@@ -113,7 +108,10 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  left_back_target = 200;
+  right_back_target = 300;
+  right_front_target = 400; // 设置前右电机目标速度
+  left_front_target = 500; // 设置前左电机目标速度
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -137,21 +135,20 @@ int main(void)
   MX_TIM8_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-  // 初始化电机控制，周期为1000，使得电机转动速度可以的得到更加精准的控制
-  Servo1_Init();
-  Servo2_Init(); // 初始化舵机
+  // Servo1_Init();
+  // Servo2_Init();
   Motor_Init();
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为高电平
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为高电平
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为高电平
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为高电平
+  void initNameValuePairs();
+  motor_vel(300,350,400,450);
 
-
-  // Motor_Read_Speed_test();
-  // motor_vel(1000,1000,1000,1000  );
-  // left_front_speed = read_left_front_feedback();
-  // right_front_speed = read_right_front_feedback();
-  // left_back_speed = read_left_back_feedback();
-  // right_back_speed = read_right_back_feedback();
-  // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 1000);
-  // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
-  // ReturnToBlue(message, &velocity_msg_test);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -161,29 +158,17 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
-    velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
-    // velocity_msg_test =
-    ReturnToBlue(name_value_pairs, numPairs, buffer, sizeof(buffer)); // 将速度消息转换为字节
-    control_test();
-    HAL_Delay(100);
-    // Servo_test();
-    // velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
-    // ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
-    // control_test();
-    // Servo1_SetAngle(0);
-    // Servo1_SetAngle(5);
-    // HAL_Delay(1000);
 
-    Servo_catch();
-    Servo_turnUp();
-    HAL_Delay(1000);
-    Servo_turnDown();
-    HAL_Delay(1000);
-    Servo_put();
-    HAL_Delay(1000);
-
+      left_front_speed = read_left_front_feedback();
+      right_front_speed = read_right_front_feedback();
+      left_back_speed = read_left_back_feedback();
+      right_back_speed = read_right_back_feedback();
+      sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f\n",
+    left_front_speed, right_front_speed, left_back_speed, right_back_speed);
+      HAL_UART_Transmit_DMA(&huart2, (uint8_t *)msg, strlen(msg));
+    HAL_Delay(100); // 延时100毫秒
   }
+  /* USER CODE END 3 */
 }
 
 /**
@@ -233,8 +218,8 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-// }
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+}
 /* USER CODE END 4 */
 
 /**

@@ -20,8 +20,7 @@
 #define LEFT_BACK TIM_CHANNEL_3
 #define RIGHT_BACK TIM_CHANNEL_4
 
-extern int left_front_speed, right_front_speed;
-extern int left_back_speed, right_back_speed;
+extern float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
 extern int left_back_feedback,right_back_feedback;
 extern int left_front_feedback,right_front_feedback;
 extern int left_back_error, right_back_error;
