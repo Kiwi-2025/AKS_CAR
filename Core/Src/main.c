@@ -65,8 +65,15 @@ int left_front_error, right_front_error;
 // variants used for testing
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
-uint8_t message[7];
+char buffer[100]; // 用于存储发送到蓝牙的数据
+// 定义键值对结构
+typedef struct {
+    const char *name;
+    float value;
+} NameValuePair;
 
+NameValuePair name_value_pairs[] = {}; // 用于存储键值对的数组
+int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -156,7 +163,7 @@ int main(void)
     // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
     velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
     // velocity_msg_test =
-    ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
+    ReturnToBlue(name_value_pairs, numPairs, buffer, sizeof(buffer)); // 将速度消息转换为字节
     control_test();
     HAL_Delay(100);
   }
