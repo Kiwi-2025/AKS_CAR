@@ -64,6 +64,16 @@ int left_front_error, right_front_error;
 // variants used for testing
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
+
+char buffer[100]; // 用于存储发送到蓝牙的数据
+// 定义键值对结构
+typedef struct {
+    const char *name;
+    float value;
+} NameValuePair;
+
+NameValuePair name_value_pairs[] = {}; // 用于存储键值对的数组
+int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 uint8_t message[7];
 uint32_t upEdge = 0;      // 存储上升沿时间
 uint32_t downEdge = 0;    // 存储下降沿时间
@@ -72,6 +82,7 @@ uint8_t measurementComplete = 0;  // 测量完成标志
 uint8_t msg_sonic[5];
 uint32_t lastTriggerTime = 0;
 const uint32_t triggerInterval = 50; // 触发间隔(ms)
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -150,6 +161,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
+    velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
+    // velocity_msg_test =
+    ReturnToBlue(name_value_pairs, numPairs, buffer, sizeof(buffer)); // 将速度消息转换为字节
+    control_test();
+    HAL_Delay(100);
     // Servo_test();
     // velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
     // ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
@@ -165,6 +182,7 @@ int main(void)
     HAL_Delay(1000);
     Servo_put();
     HAL_Delay(1000);
+
   }
 }
 
