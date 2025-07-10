@@ -157,13 +157,14 @@ int main(void)
     // Servo1_SetAngle(0);
     // Servo1_SetAngle(5);
     // HAL_Delay(1000);
-    // Servo_catch();
-    // Servo_turnUp();
-    // HAL_Delay(1000);
-    // Servo_turnDown();
-    // HAL_Delay(1000);
-    // Servo_put();
-    // HAL_Delay(1000);
+
+    Servo_catch();
+    Servo_turnUp();
+    HAL_Delay(1000);
+    Servo_turnDown();
+    HAL_Delay(1000);
+    Servo_put();
+    HAL_Delay(1000);
   }
 }
 

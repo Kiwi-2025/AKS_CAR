@@ -29,7 +29,7 @@ void Servo2_SetAngle(uint16_t angle) {
 }
 
 void Servo_catch(void) {
-  Servo1_SetAngle(10); // 舵机1抓取物体前先将角度设置为10度
+  Servo1_SetAngle(0); // 舵机1抓取物体前先将角度设置为10度
   HAL_Delay(100);
   // TODO: 舵机1抓取物体,这个参数需要根据实际情况调整
   Servo1_SetAngle(140);
@@ -39,13 +39,13 @@ void Servo_put(void) {
   Servo1_SetAngle(10); // 舵机1放下物体
 }
 void Servo_turnUp(void) {
-  for (short angle = 0; angle < 105; angle += 15) {
+  for (short angle = 0; angle < 100; angle += 10) {
     Servo2_SetAngle(angle); // 舵机2向上转动
     HAL_Delay(30); // 延时30毫秒
   }
 }
 void Servo_turnDown(void) {
-  for (short angle = 105; angle > 0; angle -= 15) {
+  for (short angle = 100; angle > 0; angle -= 10) {
     Servo2_SetAngle(angle); // 舵机2向下转动
     HAL_Delay(30); // 延时30毫秒
   }
