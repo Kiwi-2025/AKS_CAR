@@ -54,7 +54,6 @@
 int left_front_target, right_front_target;
 int left_back_target, right_back_target;
 
-
 int left_front_speed, right_front_speed;
 int left_back_speed, right_back_speed;
 int left_back_feedback,right_back_feedback;
@@ -65,6 +64,7 @@ int left_front_error, right_front_error;
 // variants used for testing
 float velocity_msg_test; // 用于测试的速度消息变量
 char *msg_test = "S";
+
 char buffer[100]; // 用于存储发送到蓝牙的数据
 // 定义键值对结构
 typedef struct {
@@ -74,6 +74,15 @@ typedef struct {
 
 NameValuePair name_value_pairs[] = {}; // 用于存储键值对的数组
 int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
+uint8_t message[7];
+uint32_t upEdge = 0;      // 存储上升沿时间
+uint32_t downEdge = 0;    // 存储下降沿时间
+float distance = 0;       // 计算得到的距离(cm)
+uint8_t measurementComplete = 0;  // 测量完成标志
+uint8_t msg_sonic[5];
+uint32_t lastTriggerTime = 0;
+const uint32_t triggerInterval = 50; // 触发间隔(ms)
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,7 +104,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  left_front_target = 200; // 设置前左电机目标速度
+  // left_front_target = 200; // 设置前左电机目标速度
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -134,12 +143,12 @@ int main(void)
   Motor_Init();
 
 
-  Motor_Read_Speed_test();
+  // Motor_Read_Speed_test();
   // motor_vel(1000,1000,1000,1000  );
-  left_front_speed = read_left_front_feedback();
-  right_front_speed = read_right_front_feedback();
-  left_back_speed = read_left_back_feedback();
-  right_back_speed = read_right_back_feedback();
+  // left_front_speed = read_left_front_feedback();
+  // right_front_speed = read_right_front_feedback();
+  // left_back_speed = read_left_back_feedback();
+  // right_back_speed = read_right_back_feedback();
   // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 1000);
   // bytes = (uint8_t)((velocity_msg_test >> 24) & 0xFF); // 将速度消息转换为字节
   // ReturnToBlue(message, &velocity_msg_test);
@@ -147,27 +156,34 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /* USER CODE END 3 */
   while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-    //Motor_test(); // 测试电机
-    //Servo_test(); // 测试舵机
-
-    // HAL_TIM_PeriodElapsedCallback(&htim7); // 调用定时器溢出回调函数
-
-    // memcpy(bytes, &velocity_msg_test, sizeof(velocity_msg_test));
-    // HAL_UART_Transmit_DMA(&huart2, (uint8_t*)msg_test, sizeof(msg));
-    // HAL_UART_Transmit_DMA(&huart2, velocity_msg_test, sizeof(velocity_msg_test))
     // velocity_msg_test = left_front_error; // 每次定时器溢出时读取一次转速
     velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
     // velocity_msg_test =
     ReturnToBlue(name_value_pairs, numPairs, buffer, sizeof(buffer)); // 将速度消息转换为字节
     control_test();
     HAL_Delay(100);
+    // Servo_test();
+    // velocity_msg_test = read_left_front_feedback(); // 读取前左电机的速度
+    // ReturnToBlue(message, &velocity_msg_test); // 将速度消息转换为字节
+    // control_test();
+    // Servo1_SetAngle(0);
+    // Servo1_SetAngle(5);
+    // HAL_Delay(1000);
+
+    Servo_catch();
+    Servo_turnUp();
+    HAL_Delay(1000);
+    Servo_turnDown();
+    HAL_Delay(1000);
+    Servo_put();
+    HAL_Delay(1000);
+
   }
-  /* USER CODE END 3 */
 }
 
 /**
