@@ -6,23 +6,23 @@
 #define MOTOR_H
 
 // some usefull constants
-#define reduction_ratio 21.3 // 9.6:1
+#define reduction_ratio 21.3 // 减速比
 #define pulse_num 44.0
 #define diameter 65.0       // 车轮直径 mm
-#define KP 0.38
-#define KI 0.00171
-#define KD 0
+#define read_period 0.2   // 读取编码器的周期 s
+#define KP 0.7             // 比例系数
+#define KI 0.035
+#define KD 0.23
 #define pi 3.1416
-#define maxspeed 1600 // 最大速度
+#define maxspeed 900 // 最大速度
 
-#define LEFT_FRONT TIM_CHANNEL_1
-#define RIGHT_FRONT TIM_CHANNEL_2
-#define LEFT_BACK TIM_CHANNEL_3
-#define RIGHT_BACK TIM_CHANNEL_4
+#define RIGHT_FRONT TIM_CHANNEL_1
+#define LEFT_FRONT TIM_CHANNEL_2
+#define RIGHT_BACK TIM_CHANNEL_3
+#define LEFT_BACK TIM_CHANNEL_4
 
 extern float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
-extern int left_back_feedback,right_back_feedback;
-extern int left_front_feedback,right_front_feedback;
+extern float left_back_feedback,right_back_feedback, left_front_feedback,right_front_feedback;
 extern int left_back_error, right_back_error;
 extern int left_front_error, right_front_error;
 

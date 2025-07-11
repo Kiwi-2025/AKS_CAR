@@ -57,9 +57,9 @@ int left_back_target, right_back_target;
 
 float left_front_speed, right_front_speed;
 float left_back_speed, right_back_speed;
-int left_back_feedback,right_back_feedback;
-int left_front_feedback,right_front_feedback;
-int left_back_error, right_back_error ;
+float left_back_feedback, right_back_feedback;
+float left_front_feedback, right_front_feedback;
+int left_back_error, right_back_error;
 int left_front_error, right_front_error;
 
 // variants used for testing
@@ -70,10 +70,10 @@ char msg[1024]; // 用于存储发送到蓝牙的数据
 
 // int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 
-uint32_t upEdge = 0;      // 存储上升沿时间
-uint32_t downEdge = 0;    // 存储下降沿时间
-float distance = 0;       // 计算得到的距离(cm)
-uint8_t measurementComplete = 0;  // 测量完成标志
+uint32_t upEdge = 0; // 存储上升沿时间
+uint32_t downEdge = 0; // 存储下降沿时间
+float distance = 0; // 计算得到的距离(cm)
+uint8_t measurementComplete = 0; // 测量完成标志
 uint8_t msg_sonic[5];
 uint32_t lastTriggerTime = 0;
 const uint32_t triggerInterval = 50; // 触发间隔(ms)
@@ -82,6 +82,7 @@ const uint32_t triggerInterval = 50; // 触发间隔(ms)
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -95,146 +96,146 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
-{
+int main(void) {
+    /* USER CODE BEGIN 1 */
+    // left_front_target = 200; // 设置前左电机目标速度
+    /* USER CODE END 1 */
 
-  /* USER CODE BEGIN 1 */
-  // left_front_target = 200; // 设置前左电机目标速度
-  /* USER CODE END 1 */
+    /* MCU Configuration--------------------------------------------------------*/
 
-  /* MCU Configuration--------------------------------------------------------*/
+    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    HAL_Init();
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+    /* USER CODE BEGIN Init */
+    left_back_target = 550;
+    right_back_target = 550;
+    right_front_target = 550; // 设置前右电机目标速度
+    left_front_target = 550; // 设置前左电机目标速度
+    /* USER CODE END Init */
 
-  /* USER CODE BEGIN Init */
-  left_back_target = 200;
-  right_back_target = 300;
-  right_front_target = 400; // 设置前右电机目标速度
-  left_front_target = 500; // 设置前左电机目标速度
-  /* USER CODE END Init */
+    /* Configure the system clock */
+    SystemClock_Config();
 
-  /* Configure the system clock */
-  SystemClock_Config();
+    /* USER CODE BEGIN SysInit */
 
-  /* USER CODE BEGIN SysInit */
+    /* USER CODE END SysInit */
 
-  /* USER CODE END SysInit */
+    /* Initialize all configured peripherals */
+    MX_GPIO_Init();
+    MX_DMA_Init();
+    MX_TIM1_Init();
+    MX_TIM2_Init();
+    MX_TIM3_Init();
+    MX_TIM4_Init();
+    MX_TIM5_Init();
+    MX_TIM12_Init();
+    MX_USART1_UART_Init();
+    MX_USART2_UART_Init();
+    MX_TIM8_Init();
+    MX_TIM7_Init();
+    /* USER CODE BEGIN 2 */
+    // Servo1_Init();
+    // Servo2_Init();
+    Motor_Init();
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为高电平
+    void initNameValuePairs();
+    // motor_vel(600,600,600,600);
+    // uint32_t duty_test = 80;
+    // __HAL_TIM_SET_COMPARE(&htim1, LEFT_FRONT, duty_test); // 设置左前电机PWM占空比
+    // __HAL_TIM_SET_COMPARE(&htim1, RIGHT_FRONT, duty_test); // 设置右前电机PWM占空比
+    // __HAL_TIM_SET_COMPARE(&htim1, LEFT_BACK, duty_test); // 设置左后电机PWM占空比
+    // __HAL_TIM_SET_COMPARE(&htim1, RIGHT_BACK, duty_test); // 设置右后电机PWM占空比
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_TIM1_Init();
-  MX_TIM2_Init();
-  MX_TIM3_Init();
-  MX_TIM4_Init();
-  MX_TIM5_Init();
-  MX_TIM12_Init();
-  MX_USART1_UART_Init();
-  MX_USART2_UART_Init();
-  MX_TIM8_Init();
-  MX_TIM7_Init();
-  /* USER CODE BEGIN 2 */
-  // Servo1_Init();
-  // Servo2_Init();
-  Motor_Init();
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为高电平
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为高电平
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为高电平
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为高电平
-  void initNameValuePairs();
-  motor_vel(300,350,400,450);
+    /* USER CODE END 2 */
 
-  /* USER CODE END 2 */
+    /* Infinite loop */
+    /* USER CODE BEGIN WHILE */
+    /* USER CODE END 3 */
+    while (1) {
+        /* USER CODE END WHILE */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  /* USER CODE END 3 */
-  while (1) {
-    /* USER CODE END WHILE */
+        /* USER CODE BEGIN 3 */
 
-    /* USER CODE BEGIN 3 */
+        // left_front_speed = read_left_front_feedback();
+        // right_front_speed = read_right_front_feedback();
+        // left_back_speed = read_left_back_feedback();
+        // right_back_speed = read_right_back_feedback();
 
-      left_front_speed = read_left_front_feedback();
-      right_front_speed = read_right_front_feedback();
-      left_back_speed = read_left_back_feedback();
-      right_back_speed = read_right_back_feedback();
-      sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f\n",
-    left_front_speed, right_front_speed, left_back_speed, right_back_speed);
-      HAL_UART_Transmit_DMA(&huart2, (uint8_t *)msg, strlen(msg));
-    HAL_Delay(100); // 延时100毫秒
-  }
-  /* USER CODE END 3 */
+        motor_pid_control();
+        HAL_Delay(200);
+    }
+    /* USER CODE END 3 */
 }
 
 /**
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+void SystemClock_Config(void) {
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-  */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+    /** Configure the main internal regulator output voltage
+    */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 72;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    /** Initializes the RCC Oscillators according to the specified parameters
+    * in the RCC_OscInitTypeDef structure.
+    */
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+    RCC_OscInitStruct.PLL.PLLM = 8;
+    RCC_OscInitStruct.PLL.PLLN = 72;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+    RCC_OscInitStruct.PLL.PLLQ = 4;
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+        Error_Handler();
+    }
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+    /** Initializes the CPU, AHB and APB buses clocks
+    */
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                  | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
+        Error_Handler();
+    }
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if (htim == &htim7) {
+    }
 }
+
 /* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
-void Error_Handler(void)
-{
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
-  /* USER CODE END Error_Handler_Debug */
+void Error_Handler(void) {
+    /* USER CODE BEGIN Error_Handler_Debug */
+    /* User can add his own implementation to report the HAL error return state */
+    __disable_irq();
+    while (1) {
+    }
+    /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
