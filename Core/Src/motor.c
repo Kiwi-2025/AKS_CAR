@@ -12,7 +12,7 @@
 
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
-void Motor_Init(void) {
+void motor_init(void) {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 启动TIM1通道1的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2); // 启动TIM1通道2的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 启动TIM1通道3的PWM输出
@@ -32,6 +32,23 @@ void Motor_Init(void) {
     HAL_TIM_Base_Start_IT(&htim7); // 启动TIM7的基本定时器中断
 }
 
+void motor_brake(void) {
+    // 设置刹车状态
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // PD1高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // PD2高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // PD3高电平
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // PD4高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // PE1高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // PE2高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // PE3高电平
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // PE4高电平
+
+    // 设置PWM占空比为0，停止输出
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 100);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 100);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 100);
+}
 /* 硬件抽象 -------------------------------------------------------------*/
 float read_left_front_feedback(void) {
     int count_num = (short) __HAL_TIM_GET_COUNTER(&htim3); //读取编码器数据

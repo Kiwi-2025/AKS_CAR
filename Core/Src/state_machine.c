@@ -78,8 +78,6 @@ void StateMachine_HandleState(void) {
     }
 }
 
-CarEvent_t
-
 // 获取当前状态（用于调试）
 CarState_t StateMachine_GetCurrentState(void) {
     return current_state;

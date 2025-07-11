@@ -7,14 +7,14 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
     float rounding_omega = turn_angle_degrees * KLP; // 将角度转换为弧度
 
     // 特殊情况：纯直线运动
-    if (fabs(rounding_omega) < omega_eps) {
+    if (fabs(rounding_omega) < omega_eps && fabs(linear_velocity) > lin_vel_eps) {
         left_front_target = linear_velocity;
         right_front_target = linear_velocity;
         left_back_target = linear_velocity;
         right_back_target = linear_velocity;
     }
     // 特殊情况：保持静止
-    if (fabs(linear_velocity) < lin_vel_eps) {
+    if (fabs(linear_velocity) < lin_vel_eps && fabs(rounding_omega) < omega_eps) {
         // 静止状态
         left_front_target = 0;
         right_front_target = 0;
@@ -69,11 +69,23 @@ void motor_pid_control(void) {
     motor_vel(left_front_speed, right_front_speed, left_back_speed, right_back_speed);
 }
 
+/* 测试用函数 ------------------------------------------------------------------------------*/
 // 原地旋转运动函数
-void spin(short spin_dir) {
-    if (spin_dir == 1) { // 顺时针旋转
-        set_speed(0, 90); // 设置线速度为0，角速度为90度
-    } else if (spin_dir == -1) { // 逆时针旋转
-        set_speed(0, -90); // 设置线速度为0，角速度为-90度
-    }
+void spin(void) {
+    set_speed(0, 2); // 设置线速度为0，角速度为90度
+    HAL_Delay(1000); // 旋转5秒
+    motor_brake(); // 刹车
+    HAL_Delay(10000); // 等待3秒
+    // set_speed(0, -90); // 停止运动
+    // HAL_Delay(5000);
+    // motor_brake(); // 刹车
+}
+// 前后运动函数
+void move_forward(void) {
+    set_speed(500, 0); // 设置线速度为300，角速度为0
+    HAL_Delay(5000);
+    // motor_brake(); // 刹车
+    // set_speed(-500, 0); // 停止运动
+    // HAL_Delay(5000);
+    // motor_brake(); // 刹车
 }

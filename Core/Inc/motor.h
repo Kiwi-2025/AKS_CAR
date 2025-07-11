@@ -18,18 +18,22 @@
 #define vel_tolerance 10.0          // 速度误差容忍度 mm/s，将速度小于容忍度的速度视作刹车
 #define maxspeed 900                // 最大速度限制，保护电机
 
+/* 定义电机PWM通道 ---------------------------------------------------*/
 #define RIGHT_FRONT TIM_CHANNEL_1
 #define LEFT_FRONT TIM_CHANNEL_2
 #define RIGHT_BACK TIM_CHANNEL_3
 #define LEFT_BACK TIM_CHANNEL_4
+
+/* 定义电机GPIO口 ---------------------------------------------------*/
+
 /* 外部变量 --------------------------------------------------------------------------------*/
 extern float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
 extern float left_back_feedback, right_back_feedback, left_front_feedback, right_front_feedback;
 extern int left_back_error, right_back_error;
 extern int left_front_error, right_front_error;
 
-void Motor_Init(void);
-
+void motor_init(void);
+void motor_brake(void);
 /* 硬件抽象 -------------------------------------------------------------*/
 // Read the feedback from 4 motors encoders
 float read_left_front_feedback(void); //read the left front motor's encoder

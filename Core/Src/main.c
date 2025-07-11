@@ -138,7 +138,7 @@ int main(void) {
     /* USER CODE BEGIN 2 */
     //Servo1_Init();
     //Servo2_Init();
-    //Motor_Init();
+    motor_init();
 
     /* USER CODE END 2 */
 
@@ -149,7 +149,8 @@ int main(void) {
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-
+        spin();
+        // move_forward();
     }
     /* USER CODE END 3 */
 }
