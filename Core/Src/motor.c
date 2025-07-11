@@ -78,9 +78,9 @@ int left_front_PID(int target_speed, int speed, int *error) {
     // *error = left_front_error_before;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-        1.2 * (left_front_error - left_front_error_last)
+        0.7 * (left_front_error - left_front_error_last)
         + 0.035 * left_front_error
-        + 0.5 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
+        + 0.2 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
     left_front_error_before = left_front_error_last; // 保存上上次误差
     left_front_error_last = left_front_error; // 保存上次偏差
     // *error = pwm_pid;
@@ -92,8 +92,11 @@ int right_front_PID(int target_speed, int speed, int *error) {
     static int right_front_error_last = 0, right_front_error_before = 0;
     int pwm_pid = 0;
     *error = right_front_error;
-    pwm_pid = KP * (right_front_error - right_front_error_last) + KI * right_front_error
-              + KD * (right_front_error - 2 * right_front_error_last + right_front_error_before);
+    // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
+    pwm_pid =
+            0.7 * (right_front_error - right_front_error_last)
+            + 0.031 * right_front_error
+            + 0.26 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
     right_front_error = right_front_error_last; // 保存上上次误差
     right_front_error_last = right_front_error; // 保存上次偏差
     return pwm_pid;

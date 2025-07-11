@@ -107,10 +107,10 @@ int main(void) {
     HAL_Init();
 
     /* USER CODE BEGIN Init */
-    left_back_target = 550;
-    right_back_target = 550;
-    right_front_target = 550; // 设置前右电机目标速度
-    left_front_target = 550; // 设置前左电机目标速度
+    left_back_target = 0;
+    right_back_target = 0;
+    right_front_target = 600; // 设置前右电机目标速度
+    left_front_target = 0; // 设置前左电机目标速度
     /* USER CODE END Init */
 
     /* Configure the system clock */
