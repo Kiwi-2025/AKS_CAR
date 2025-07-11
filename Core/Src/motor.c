@@ -136,48 +136,59 @@ int right_back_PID(int target_speed, int speed, int *error) {
 void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed) {
 
 
-    // // 判断前进方向，控制
-    // if (left_front_speed > 0) {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为低电平
-    // } else if (left_front_speed < 0) {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PD1为低电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
-    // } else {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
-    // }
-    // if (right_front_speed > 0) {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为低电平
-    // } else if (right_front_speed < 0) {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PD3为低电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
-    // } else {
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-    //     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
-    // }
-    // if (left_back_speed > 0) {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为低电平
-    // } else if (left_back_speed < 0) {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE1为低电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
-    // } else {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
-    // }
-    // if (right_back_speed > 0) {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
-    // } else if (right_back_speed < 0) {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PE3为低电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
-    // } else {
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-    //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
-    // }
-
+    // 判断前进方向，控制
+    if (left_front_speed > vel_tolerance) {
+        // 前进
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为低电平
+    } else if (left_front_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PD1为低电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
+    }
+    if (right_front_speed > vel_tolerance) {
+        // 前进
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为低电平
+    } else if (right_front_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PD3为低电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
+    }
+    if (left_back_speed > vel_tolerance) {
+        // 前进
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为低电平
+    } else if (left_back_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE1为低电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
+    }
+    if (right_back_speed > vel_tolerance) {
+        // 前进
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
+    } else if (right_back_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PE3为低电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+    }
 
     // 计算占空比
     uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) / 8.63);

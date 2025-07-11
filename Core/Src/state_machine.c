@@ -2,13 +2,11 @@
 // Created by ROG on 25-7-8.
 //
 #include "state_machine.h"
-#include "sonic.h"
-#include "motor.h"
-#include "control.h"
-#include "blue.h"
 
 // 全局变量
 static CarState_t current_state = STATE_INIT; // 当前状态
+static CarState_t next_state = STATE_INIT; // 下一个状态
+static CarEvent_t current_event = EVENT_NONE; // 当前事件
 static uint32_t state_start_time = 0;
 static SensorData_t sensor_data;
 
@@ -23,44 +21,54 @@ void StateMachine_Init() {
     state_start_time = HAL_GetTick();
 }
 
-// 状态机主循环更新函数
 void StateMachine_Update(void) {
     // 获取传感器数据
-
-    // 获取当前事件
-    CarEvent_t event = StateMachine_GetEvent(&sensor_data);
-
-    // 处理状态转换
-    StateMachine_HandleState(current_state, event);
+    StateMachine_GetEvent(&sensor_data);
+    // 处理当前状态
+    StateMachine_HandleState();
 }
 
-
-
 // 状态处理函数
-void StateMachine_HandleState(CarState_t state, CarEvent_t event) {
-    CarState_t next_state = current_state;
-
+void StateMachine_HandleState(void) {
     switch (current_state) {
         case STATE_INIT:
-
+            // 模拟初始化延时，给硬件一些缓冲时间
+            HAL_Delay(1000);
             break;
-        case FETCHING:
 
+        case FETCHING:
+            if (current_event == EVENT_IS_FETCH) next_state = WAIT_FOR_MSG;
+            break;
+
+        case WAIT_FOR_MSG:
+            if (current_event == EVENT_TASK1_BEGIN) {
+                next_state = FOLLOW_LINE;
+            }
+            if (current_event == EVENT_TASK2_BEGIN) {
+                next_state = OBSTACLE_AVOID;
+            }
+            break;
+
+        case FOLLOW_LINE:
+            if (current_event == EVENT_OBSERVE_GOAL) {
+                next_state = PLACING;
+            }
             break;
         case OBSTACLE_AVOID:
-
+            if (current_event == EVENT_OBSERVE_GOAL) {
+                next_state = PLACING;
+            }
             break;
         case PLACING:
-
+            if (current_event == EVENT_IS_PLACE) {
+                next_state = FINISH;
+            }
             break;
-        case FOLLOW_LINE:
-
-            break;
-        case REACH_GOAL:
-
+        case FINISH:
             break;
         default:
-
+            next_state = current_state; // 保持当前状态
+            //TODO: 可以添加错误处理逻辑，或者设置自动恢复状态
     }
 
     // 状态切换
@@ -69,6 +77,8 @@ void StateMachine_HandleState(CarState_t state, CarEvent_t event) {
         state_start_time = HAL_GetTick();
     }
 }
+
+CarEvent_t
 
 // 获取当前状态（用于调试）
 CarState_t StateMachine_GetCurrentState(void) {

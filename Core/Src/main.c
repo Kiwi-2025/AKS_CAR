@@ -107,10 +107,12 @@ int main(void) {
     HAL_Init();
 
     /* USER CODE BEGIN Init */
-    left_back_target = 0;
-    right_back_target = 0;
-    right_front_target = 600; // 设置前右电机目标速度
-    left_front_target = 0; // 设置前左电机目标速度
+    //PID控制测试用电机
+    // left_back_target = 200;
+    // right_back_target = 300;
+    // right_front_target = 600; // 设置前右电机目标速度
+    // left_front_target = 800; // 设置前左电机目标速度
+
     /* USER CODE END Init */
 
     /* Configure the system clock */
@@ -134,24 +136,9 @@ int main(void) {
     MX_TIM8_Init();
     MX_TIM7_Init();
     /* USER CODE BEGIN 2 */
-    // Servo1_Init();
-    // Servo2_Init();
-    Motor_Init();
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为高电平
-    void initNameValuePairs();
-    // motor_vel(600,600,600,600);
-    // uint32_t duty_test = 80;
-    // __HAL_TIM_SET_COMPARE(&htim1, LEFT_FRONT, duty_test); // 设置左前电机PWM占空比
-    // __HAL_TIM_SET_COMPARE(&htim1, RIGHT_FRONT, duty_test); // 设置右前电机PWM占空比
-    // __HAL_TIM_SET_COMPARE(&htim1, LEFT_BACK, duty_test); // 设置左后电机PWM占空比
-    // __HAL_TIM_SET_COMPARE(&htim1, RIGHT_BACK, duty_test); // 设置右后电机PWM占空比
+    //Servo1_Init();
+    //Servo2_Init();
+    //Motor_Init();
 
     /* USER CODE END 2 */
 
@@ -163,13 +150,6 @@ int main(void) {
 
         /* USER CODE BEGIN 3 */
 
-        // left_front_speed = read_left_front_feedback();
-        // right_front_speed = read_right_front_feedback();
-        // left_back_speed = read_left_back_feedback();
-        // right_back_speed = read_right_back_feedback();
-
-        motor_pid_control();
-        HAL_Delay(200);
     }
     /* USER CODE END 3 */
 }
@@ -220,6 +200,8 @@ void SystemClock_Config(void) {
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim7) {
+        // 每200ms执行一次
+        motor_pid_control();
     }
 }
 
