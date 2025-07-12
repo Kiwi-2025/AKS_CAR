@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 #include "main.h"  // 包含 GPIO、TIM 等硬件定义
+#include "main.h"
+#include "tim.h"
+#include <stdio.h>
 
 // 传感器ID枚举，和实现文件保持一致
 typedef enum {
@@ -23,6 +26,17 @@ typedef enum {
 #define RIGHT_ECHO_PIN    GPIO_PIN_3    // TIM2_CH4, PA3
 #define RIGHT_ECHO_PORT   GPIOA
 #define RIGHT_ECHO_AF     GPIO_AF1_TIM2
+
+#define FRONT_TRIG_PORT  GPIOG
+#define FRONT_TRIG_PIN   GPIO_PIN_2
+#define LEFT_TRIG_PORT   GPIOG
+#define LEFT_TRIG_PIN    GPIO_PIN_3
+#define RIGHT_TRIG_PORT  GPIOG
+#define RIGHT_TRIG_PIN   GPIO_PIN_4
+
+#define TRIGGER_INTERVAL  50       // ms
+#define MAX_DISTANCE      400.0f   // cm
+#define INVALID_DISTANCE  -1.0f    // 无效距离标识
 
 // Trig引脚定义，在 main.h 里已有定义
 // #define Trig1_Pin GPIO_PIN_2

@@ -27,11 +27,15 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 
+#include "sonic.h"
 # include "motor.h"
 # include "servo.h"
 # include "blue.h"
 # include "control.h"
-#include "sonic.h"
+# include "fuzzy_control.h"
+
+// TODO:终极目标是主函数中仅仅引入状态机，仅需要每20ms更新一次状态机即可
+# include "state_machine.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,20 +56,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-int left_front_target, right_front_target;
-int left_back_target, right_back_target;
-
-float left_front_speed, right_front_speed;
-float left_back_speed, right_back_speed;
-float left_back_feedback, right_back_feedback;
-float left_front_feedback, right_front_feedback;
-int left_back_error, right_back_error;
-int left_front_error, right_front_error;
+int left_front_target, right_front_target, left_back_target, right_back_target;
+float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
+float left_back_feedback, right_back_feedback, left_front_feedback, right_front_feedback;
+int left_back_error, right_back_error, left_front_error, right_front_error;
 
 // variants used for testing
-float velocity_msg_test; // 用于测试的速度消息变量
-char *msg_test = "S";
-
 char msg[1024]; // 用于存储发送到蓝牙的数据
 
 // int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);

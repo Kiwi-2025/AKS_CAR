@@ -1,18 +1,4 @@
-#include "ultrasonic.h"
-#include "main.h"
-#include "tim.h"
-#include <stdio.h>
-
-#define FRONT_TRIG_PORT  GPIOG
-#define FRONT_TRIG_PIN   GPIO_PIN_2
-#define LEFT_TRIG_PORT   GPIOG
-#define LEFT_TRIG_PIN    GPIO_PIN_3
-#define RIGHT_TRIG_PORT  GPIOG
-#define RIGHT_TRIG_PIN   GPIO_PIN_4
-
-#define TRIGGER_INTERVAL  50       // ms
-#define MAX_DISTANCE      400.0f   // cm
-#define INVALID_DISTANCE  -1.0f    // 无效距离标识
+#include "sonic.h"
 
 static uint8_t front_measComplete = 1;
 static uint8_t left_measComplete  = 1;

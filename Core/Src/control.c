@@ -29,7 +29,7 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
     right_back_target   = linear_velocity - rounding_omega * half_width;
     motor_pid_control();
 }
-
+/* 轮速度控制函数 --------------------------------------------------------------------------------*/
 // PID 控制函数
 void motor_pid_control(void) {
     left_front_feedback = read_left_front_feedback();
