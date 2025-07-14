@@ -2,9 +2,10 @@
 // Created by ROG on 25-7-7.
 //
 # include "control.h"
+
 // 根据运动需求设置四轮转速
 void set_speed(float linear_velocity, float turn_angle_degrees) {
-    float rounding_omega = turn_angle_degrees * KLP; // 将角度转换为弧度
+    float rounding_omega = turn_angle_degrees * FLP; // 将角度转换为弧度
 
     // // 特殊情况：纯直线运动
     // if (fabs(rounding_omega) < omega_eps && fabs(linear_velocity) > lin_vel_eps) {
@@ -23,12 +24,13 @@ void set_speed(float linear_velocity, float turn_angle_degrees) {
     // }
 
     // 计算前后轮的目标速度
-    left_front_target   = linear_velocity + rounding_omega * half_width;
-    right_front_target  = linear_velocity - rounding_omega * half_width;
-    left_back_target    = linear_velocity + rounding_omega * half_width;
-    right_back_target   = linear_velocity - rounding_omega * half_width;
+    left_front_target = linear_velocity + rounding_omega * half_width;
+    right_front_target = linear_velocity - rounding_omega * half_width;
+    left_back_target = linear_velocity + rounding_omega * half_width;
+    right_back_target = linear_velocity - rounding_omega * half_width;
     // motor_pid_control();
 }
+
 /* 轮速度控制函数 --------------------------------------------------------------------------------*/
 // PID 控制函数
 void motor_pid_control(void) {
@@ -67,9 +69,62 @@ void motor_pid_control(void) {
     motor_vel(left_front_speed, right_front_speed, left_back_speed, right_back_speed);
 
     sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",
-        left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
+            left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
     HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
 }
+
+/* 设置参数函数 --------------------------------------------------------------------------------*/
+char *set_parameters(char* input) {
+    // 检查输入是否为空
+    if (input == NULL || strlen(input) < 8) {
+        return "FAIL";
+    }
+
+    // 检查第0个字符是否为@
+    if (input[0] != '@') {
+        return "FAIL";
+    }
+
+    // 查找结束符'/'的位置
+    char *end_pos = strchr(input, '/');
+    if (end_pos == NULL) {
+        return "FAIL";
+    }
+    // 检查格式：@F + 1位整数 + 小数点 + 3位小数 + /
+    // 总长度应该是8个字符（@F1.234/）
+    if (end_pos - input != 7) {
+        return "FAIL";
+    }
+    // 检查第3个字符是否为小数点
+    if (input[3] != '.') {
+        return "FAIL";
+    }
+
+    // 检查第2个字符是否为数字
+    if (input[2] < '0' || input[2] > '9') {
+        return "FAIL";
+    }
+
+    // 检查第4、5、6个字符是否为数字
+    for (int i = 4; i <= 6; i++) {
+        if (input[i] < '0' || input[i] > '9') {
+            return "FAIL";
+        }
+    }
+
+    // 解析浮点数值
+    char temp_str[8];
+    strncpy(temp_str, &input[2], 5); // 复制"1.234"部分
+    temp_str[5] = '\0';
+
+    // 修改FLP参数
+    if (input[1] = 'F') {
+        FLP = atof(temp_str); // 将字符串转换为浮点数
+    }
+
+    return "YES!";
+}
+
 
 /* 测试用函数 ------------------------------------------------------------------------------*/
 // 原地旋转运动函数
@@ -82,6 +137,7 @@ void spin(void) {
     // HAL_Delay(5000);
     // motor_brake(); // 刹车
 }
+
 // 前后运动函数
 void move_forward(void) {
     set_speed(500, 0); // 设置线速度为300，角速度为0

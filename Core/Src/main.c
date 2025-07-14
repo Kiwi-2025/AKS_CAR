@@ -63,6 +63,7 @@ float left_back_error, right_back_error, left_front_error, right_front_error;
 
 // variants used for testing
 char msg[1024]; // 用于存储发送到蓝牙的数据
+float FLP = 1.0f; // 将输入的偏差值转换为旋转角速度的参数
 
 // int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 
