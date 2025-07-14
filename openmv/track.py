@@ -11,8 +11,8 @@ clock = time.clock() # 跟踪FPS帧率
 uart = pyb.UART(3, 115200, timeout_char=1000)
 # 阈值设置 根据实际情况进行更改 (1, 45, -29, 22, -21, 13)
 TRA_RGB = [(20, 45, -34, 0, -10, 12)]
-TRA_TH = [(0, 5)]           # 巡线的灰度值 阈值[(0, 64)][(128, 255)]
-TRA_AngTH = 30                  # 巡线时角度阈值
+# TRA_TH = [(0, 5)]           # 巡线的灰度值 阈值[(0, 64)][(128, 255)]
+# TRA_AngTH = 30                  # 巡线时角度阈值
 # ROI区域设置
 # (x,y,w,h,weight)=(矩形左上顶点的坐标(x,y), 矩形宽度和高度(w,h),权重)
 TRA_ROIS_LEFT = [ # [ROI, weight]
@@ -47,21 +47,24 @@ def Recive_Data():
         print(OVSys_State)            # 用于串口通信调试
 
 
-""" 接受STM32传输的消息，判断运行方式 """
-def Transmit_Data(deviation, Deflection_Angle):
+""" send data to STM32 in string """
+def Transmit_Data(deviation, deflection_angle):
 
-    formatted_deviation = format(deviation, ".2f")
-    formatted_Deflection_Angle = format(Deflection_Angle, ".2f")
+    global deviation_sum, frame_count, last_send_time
 
-    # buffer = bytearray()
-    # # define the frame format of data: 0x40, data, 0x2F(8 bits)
-    # buffer.append(0x40)
-    # buffer.extend(bytearray([0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38]))
-    # buffer.append(0x2F)
+    # 创建数据包
+    data_packet = "@{:.2f}".format(deviation)
 
-    uart.writechar(formatted_deviation)
-    uart.writechar(formatted_Deflection_Angle)
+    # 添加结束符并发送
+    uart.write(data_packet + "/")
 
+    # 调试输出
+    print("Sent Avg:", data_packet + "/")
+
+    # 重置统计变量
+    deviation_sum = 0
+    frame_count = 0
+    last_send_time = pyb.millis()
 
 
 
@@ -113,18 +116,22 @@ sensor.skip_frames(time=200)       # 跳过30帧 让相机图像在改变相机�
 sensor.set_auto_gain(False)        # 关闭自动增益
 sensor.set_auto_whitebal(False)    # 关闭默认的白平衡
 
+# 200ms平均统计变量初始化
+deviation_sum = 0.0      # 偏差累计值
+frame_count = 0          # 有效帧计数
+last_send_time = pyb.millis()  # 上一次发送时间
+SEND_INTERVAL = 200      # 发送间隔(ms)
+
+
 # 主循环
 while (1):
     clock.tick()
+    current_time = pyb.millis()
 
-    OVSys_State = 1
+    Sys_State = 1
     # OVSys_State = Recive_Data()
-    Center_Left_Sum = 0
-    Center_Right_Sum = 0
-    Weight_Left_Sum = 0
-    Weight_Right_Sum = 0
 
-    if (OVSys_State == 1): # 循迹模式或者循迹避障模式
+    if (Sys_State == 1): # 循迹模式
 
         # 事实证明，灰度模式循迹效果 not good
         # sensor.set_pixformat(sensor.GRAYSCALE) # 循迹模式 设置摄像头为灰度图
@@ -135,26 +142,48 @@ while (1):
         Center_Left = Center(ROI=TRA_ROIS_LEFT, TRA_img=TRA_img)
         Center_Right = Center(ROI=TRA_ROIS_RIGHT, TRA_img=TRA_img)
 
-        Center_Pos = (Center_Left + Center_Right) / 2
+        if (Center_Left != 0) and (Center_Right != 0):
+            Center_Pos = (Center_Left + Center_Right) / 2
+        elif (Center_Left != 0) and (Center_Right == 0):
+            Center_Pos = Center_Left
+        elif (Center_Left == 0) and (Center_Right != 0):
+            Center_Pos = Center_Right
+        else:
+            Center_Pos = 0
+
         Deflection_Angle = 0 # 需要将线心Center_Pos转换为偏角 偏角初始化为0
 
         if (Center_Pos == 0):
+            deviation = 0
+            deviation_sum += deviation
             print("Not Find Any Black Lines.")
         else:
             # 与帧中间作比，其与帧格式设置相关
             # 前进方向作为x轴，左偏为正
             Deflection_Angle = -math.atan((Center_Pos - 180)/ 120) # 计算偏角
-
             Deflection_Angle = math.degrees(Deflection_Angle) # 弧度值转换为角度
 
             TRA_img.draw_cross(int(Center_Pos), 120, color=(0, 0, 255), size=10) # 绘制十字线标记图像中心
             TRA_img.draw_circle(180, 120, 5, color=(0, 255, 0))
             deviation = 180 - Center_Pos # 计算偏离中心的距离
-            print(f"Track midpoint: {Center_Pos:.3f}, Deviation: {deviation:.3f}, Deflection_Angle: {Deflection_Angle:.1f}")
+            # print(deviation, Center_Pos) test whether deviation is correct
 
+            # 累计偏差值用于平均计算
+            deviation_sum += deviation
+            frame_count += 1
 
-    clock.fps()
-    print(clock.fps()) # 打印FPS帧率
+        if deviation_sum != 0:
+            # 计算平均偏差
+            avg_deviation = deviation_sum / frame_count
+
+        # 检查是否达到发送时间间隔
+        if current_time - last_send_time >= SEND_INTERVAL:
+            if frame_count > 0:
+                # print(f"Track midpoint: {Center_Pos:.3f}, Deviation: {avg_deviation:.3f}, Deflection_Angle: {Deflection_Angle:.1f}")
+                Transmit_Data(avg_deviation, Deflection_Angle)
+
+    # clock.fps()
+    # print(clock.fps()) # 打印FPS帧率
 
 
 
