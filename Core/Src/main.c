@@ -60,11 +60,13 @@ float left_front_target, right_front_target, left_back_target, right_back_target
 float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
 float left_back_feedback, right_back_feedback, left_front_feedback, right_front_feedback;
 float left_back_error, right_back_error, left_front_error, right_front_error;
+float x_error; // 纯跟踪算法的x轴偏差
 
 // variants used for testing
 char msg[1024]; // 用于存储发送到蓝牙的数据
-float FLP = 1.0f; // 将输入的偏差值转换为旋转角速度的参数
-char openmv_message[100];
+float FLP = -0.048f; // 将输入的偏差值转换为旋转角速度的参数
+char openmv_msg[100], blue_msg[100]; // 用于存储OpenMV和蓝牙消息
+char blue_feedback_msg[100]; // 用于反馈信息
 // int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 
 uint32_t upEdge = 0; // 存储上升沿时间
@@ -129,18 +131,35 @@ int main(void) {
     MX_TIM8_Init();
     MX_TIM7_Init();
     /* USER CODE BEGIN 2 */
-    Servo1_Init();
-    Servo2_Init();
+    // Servo1_Init();
+    // Servo2_Init();
     motor_init();
     // spin();
 
     //PID控制测试用电机
-    // left_back_target = 0;
-    // right_back_target = 0;
-    // right_front_target = 0; // 设置前右电机目标速度
-    // left_front_target = -500.0; // 设置前左电机目标速度
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t*)openmv_message, sizeof(openmv_message));
-    // motor_vel(500, 500, 500, 500); // 设置初始速度
+    // left_back_target = 500;
+    // right_back_target = 500;
+    // right_front_target = 500; // 设置前右电机目标速度
+    // left_front_target = 500.0; // 设置前左电机目标速度
+
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 80);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, 80);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 80);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, 80);
+    //
+    // // 前进
+    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
+    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为低电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为低电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET);
+
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t*)openmv_msg, sizeof(openmv_msg));
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, (uint8_t*)blue_msg, sizeof(blue_msg));
+    // motor_vel(600, 600, 600, 600); // 设置初始速度
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -155,10 +174,10 @@ int main(void) {
         // spin();
         // set_speed(600,0);
 
-        Servo_catch();
-        Servo_turnUp();
-        Servo_turnDown();
-        Servo_put();
+        // Servo_catch();
+        // Servo_turnUp();
+        // Servo_turnDown();
+        // Servo_put();
     }
     /* USER CODE END 3 */
 }
@@ -210,7 +229,7 @@ void SystemClock_Config(void) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim7) {
         // 每200ms执行一次
-
+        set_speed(80,x_error);
         motor_pid_control();
     }
 }

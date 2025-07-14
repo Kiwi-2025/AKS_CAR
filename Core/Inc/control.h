@@ -34,7 +34,7 @@ void avoid_stop();
 void motor_pid_control(void);
 
 /* 远程调参函数 --------------------------------------------------------------------------------*/
-char* set_parameters(char *input); //设置参数函数
+void set_parameters(char *input); //设置参数函数
 /* 测试用函数 ------------------------------------------------------------------------------*/
 void spin(void); //原地旋转运动函数
 void move_forward(void); //前后运动函数

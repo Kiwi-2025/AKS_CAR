@@ -3,10 +3,12 @@
 //
 # include "control.h"
 
+#include "blue.h"
+
 // 根据运动需求设置四轮转速
 void set_speed(float linear_velocity, float turn_angle_degrees) {
     float rounding_omega = turn_angle_degrees * FLP; // 将角度转换为弧度
-
+    // TODO:根据输入的偏差值改变直线前进的速度，如果偏差值比较大，那么写入一个比较小的线速度，也可以划分为几个挡位
     // // 特殊情况：纯直线运动
     // if (fabs(rounding_omega) < omega_eps && fabs(linear_velocity) > lin_vel_eps) {
     //     left_front_target = linear_velocity;
@@ -68,47 +70,72 @@ void motor_pid_control(void) {
     //将PID处理后的目标速度写入系统
     motor_vel(left_front_speed, right_front_speed, left_back_speed, right_back_speed);
 
-    sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",
-            left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
-    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
+    // 调试用函数
+    // sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",
+          //  left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
+    // HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
 }
 
 /* 设置参数函数 --------------------------------------------------------------------------------*/
-char *set_parameters(char* input) {
+void set_parameters(char *input) {
     // 检查输入是否为空
     if (input == NULL || strlen(input) < 8) {
-        return "FAIL";
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
 
     // 检查第0个字符是否为@
     if (input[0] != '@') {
-        return "FAIL";
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
 
     // 查找结束符'/'的位置
-    char *end_pos = strchr(input, '/');
-    if (end_pos == NULL) {
-        return "FAIL";
+    if (input[7] != '/') {
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
+
     // 检查格式：@F + 1位整数 + 小数点 + 3位小数 + /
     // 总长度应该是8个字符（@F1.234/）
-    if (end_pos - input != 7) {
-        return "FAIL";
+
+    // 检查第1个字符是否为F
+    if (input[1] != 'F') {
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
+
     // 检查第3个字符是否为小数点
     if (input[3] != '.') {
-        return "FAIL";
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
 
     // 检查第2个字符是否为数字
     if (input[2] < '0' || input[2] > '9') {
-        return "FAIL";
+        // strcpy(blue_feedback_msg, "FAIL");
+        sprintf(blue_feedback_msg, "FAIL");
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+        return;
     }
 
     // 检查第4、5、6个字符是否为数字
     for (int i = 4; i <= 6; i++) {
         if (input[i] < '0' || input[i] > '9') {
-            return "FAIL";
+            // strcpy(blue_feedback_msg, "FAIL");
+            sprintf(blue_feedback_msg, "FAIL");
+            HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
+            return;
         }
     }
 
@@ -118,32 +145,20 @@ char *set_parameters(char* input) {
     temp_str[5] = '\0';
 
     // 修改FLP参数
-    if (input[1] = 'F') {
-        FLP = atof(temp_str); // 将字符串转换为浮点数
-    }
-
-    return "YES!";
+    FLP = atof(temp_str); // 将字符串转换为浮点数
+    // strcpy(blue_feedback_msg, "YES!");
+    sprintf(blue_feedback_msg, "YES!FLP:%.3f", FLP);
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) blue_feedback_msg, sizeof(blue_feedback_msg));
 }
-
 
 /* 测试用函数 ------------------------------------------------------------------------------*/
 // 原地旋转运动函数
 void spin(void) {
     set_speed(0, 6); // 设置线速度为0，角速度为90度
-    // HAL_Delay(100); // 旋转5秒
-    // motor_brake(); // 刹车
-    // HAL_Delay(10000); // 等待3秒
-    // set_speed(0, -90); // 停止运动
-    // HAL_Delay(5000);
-    // motor_brake(); // 刹车
 }
 
 // 前后运动函数
 void move_forward(void) {
     set_speed(500, 0); // 设置线速度为300，角速度为0
     HAL_Delay(5000);
-    // motor_brake(); // 刹车
-    // set_speed(-500, 0); // 停止运动
-    // HAL_Delay(5000);
-    // motor_brake(); // 刹车
 }

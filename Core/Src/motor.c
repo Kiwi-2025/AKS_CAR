@@ -13,6 +13,7 @@
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
 void motor_init(void) {
+    x_error = 0; // 初始化x_error为0
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 启动TIM1通道1的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2); // 启动TIM1通道2的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 启动TIM1通道3的PWM输出
@@ -89,7 +90,7 @@ float read_right_back_feedback(void) {
 
 float left_front_PID(float target_speed, float speed, float *error) {
     float left_front_error = target_speed - speed;
-    static float left_front_error_last = -30, left_front_error_before = 30;
+    static float left_front_error_last = 0, left_front_error_before = 0;
     float pwm_pid = 0;
     // *error = left_front_error;
     // *error = left_front_error_last;
