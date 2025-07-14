@@ -15,8 +15,8 @@
 // #define KP 0.7
 // #define KI 0.035
 // #define KD 0.23
-#define vel_tolerance 10.0          // 速度误差容忍度 mm/s，将速度小于容忍度的速度视作刹车
-#define maxspeed 900                // 最大速度限制，保护电机
+#define vel_tolerance 1.0f          // 速度误差容忍度 mm/s，将速度小于容忍度的速度视作刹车
+#define maxspeed 900.0f                // 最大速度限制，保护电机
 
 /* 定义电机PWM通道 ---------------------------------------------------*/
 #define RIGHT_FRONT TIM_CHANNEL_1
@@ -29,8 +29,7 @@
 /* 外部变量 --------------------------------------------------------------------------------*/
 extern float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
 extern float left_back_feedback, right_back_feedback, left_front_feedback, right_front_feedback;
-extern int left_back_error, right_back_error;
-extern int left_front_error, right_front_error;
+extern float left_back_error, right_back_error, left_front_error, right_front_error;
 
 void motor_init(void);
 void motor_brake(void);
@@ -41,12 +40,12 @@ float read_right_front_feedback(void); //read the right front motor's encoder
 float read_left_back_feedback(void); //read the left back motor's encoder
 float read_right_back_feedback(void); //read the right back motor's encoder
 // Use PID method to set the speed of 4 motors
-int left_front_PID(int target_speed, int speed, int *error); //calculate adjustment of left front motor speed
-int right_front_PID(int target_speed, int speed, int *error); //calculate adjustment of right front motor speed
-int left_back_PID(int target_speed, int speed, int *error); //calculate adjustment of left back motor speed
-int right_back_PID(int target_speed, int speed, int *error); //calculate adjustment of right back motor speed
+float left_front_PID(float target_speed, float speed, float *error); //calculate adjustment of left front motor speed
+float right_front_PID(float target_speed, float speed, float *error); //calculate adjustment of right front motor speed
+float left_back_PID(float target_speed, float speed, float *error); //calculate adjustment of left back motor speed
+float right_back_PID(float target_speed, float speed, float *error); //calculate adjustment of right back motor speed
 // Set the PWM of 4 motors
-void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed);
+void motor_vel(float left_front_speed, float right_front_speed, float left_back_speed, float right_back_speed);
 
 
 // test function

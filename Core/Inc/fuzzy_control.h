@@ -15,7 +15,7 @@ extern "C" {
 #include <string.h>
 
 /* 外部变量 --------------------------------------------------------------------------------*/
-extern int left_front_target, right_front_target, left_back_target, right_back_target;
+extern float left_front_target, right_front_target, left_back_target, right_back_target;
 extern char msg[1024]; // 用于存储发送到蓝牙的数据
 /**
  * @brief 模糊控制主函数：根据三个方向距离输入，输出四轮理论速度

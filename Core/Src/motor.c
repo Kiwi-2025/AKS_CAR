@@ -34,21 +34,22 @@ void motor_init(void) {
 
 void motor_brake(void) {
     // 设置刹车状态
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // PD1高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // PD2高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // PD3高电平
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // PD4高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // PE1高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // PE2高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // PE3高电平
-    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // PE4高电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // PD1高电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // PD2高电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // PD3高电平
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // PD4高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // PE1高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // PE2高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // PE3高电平
+    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // PE4高电平
 
     // 设置PWM占空比为0，停止输出
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 100);
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 100);
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 100);
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 100);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 0);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 0);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
 }
+
 /* 硬件抽象 -------------------------------------------------------------*/
 float read_left_front_feedback(void) {
     int count_num = (short) __HAL_TIM_GET_COUNTER(&htim3); //读取编码器数据
@@ -86,32 +87,32 @@ float read_right_back_feedback(void) {
     return speed;
 }
 
-int left_front_PID(int target_speed, int speed, int *error) {
-    int left_front_error = target_speed - speed;
-    static int left_front_error_last = 0, left_front_error_before = 0;
-    int pwm_pid = 0;
-    *error = left_front_error;
+float left_front_PID(float target_speed, float speed, float *error) {
+    float left_front_error = target_speed - speed;
+    static float left_front_error_last = -30, left_front_error_before = 30;
+    float pwm_pid = 0;
+    // *error = left_front_error;
     // *error = left_front_error_last;
     // *error = left_front_error_before;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-        0.7 * (left_front_error - left_front_error_last)
-        + 0.035 * left_front_error
-        + 0.2 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
+            0.52 * (left_front_error - left_front_error_last)
+            + 0.04 * left_front_error
+            + 0.26 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
     left_front_error_before = left_front_error_last; // 保存上上次误差
     left_front_error_last = left_front_error; // 保存上次偏差
     // *error = pwm_pid;
     return pwm_pid;
 }
 
-int right_front_PID(int target_speed, int speed, int *error) {
-    int right_front_error = target_speed - speed;
-    static int right_front_error_last = 0, right_front_error_before = 0;
-    int pwm_pid = 0;
+float right_front_PID(float target_speed, float speed, float *error) {
+    float right_front_error = target_speed - speed;
+    static float right_front_error_last = 0, right_front_error_before = 0;
+    float pwm_pid = 0;
     *error = right_front_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.7 * (right_front_error - right_front_error_last)
+            0.52 * (right_front_error - right_front_error_last)
             + 0.031 * right_front_error
             + 0.26 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
     right_front_error = right_front_error_last; // 保存上上次误差
@@ -119,85 +120,73 @@ int right_front_PID(int target_speed, int speed, int *error) {
     return pwm_pid;
 }
 
-int left_back_PID(int target_speed, int speed, int *error) {
-    int left_back_error = target_speed - speed;
-    static int left_back_error_last = 0, left_back_error_before = 0;
-    int pwm_pid = 0;
+float left_back_PID(float target_speed, float speed, float *error) {
+    float left_back_error = target_speed - speed;
+    static float left_back_error_last = 0, left_back_error_before = 0;
+    float pwm_pid = 0;
     *error = left_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-        0.65 * (left_back_error - left_back_error_last)
-        + 0.02 * left_back_error
-        + 0.3 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
+            0.51 * (left_back_error - left_back_error_last)
+            + 0.02 * left_back_error
+            + 0.3 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
     left_back_error = left_back_error_last; // 保存上上次误差
     left_back_error_last = left_back_error; // 保存上次偏差
     return pwm_pid;
 }
 
-int right_back_PID(int target_speed, int speed, int *error) {
-    int right_back_error = target_speed - speed;
-    static int right_back_error_last = 0, right_back_error_before = 0;
-    int pwm_pid = 0;
+float right_back_PID(float target_speed, float speed, float *error) {
+    float right_back_error = target_speed - speed;
+    static float right_back_error_last = 0, right_back_error_before = 0;
+    float pwm_pid = 0;
     *error = right_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-        0.65 * (right_back_error - right_back_error_last)
-        + 0.02 * right_back_error
-        + 0.25 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
+            0.51 * (right_back_error - right_back_error_last)
+            + 0.02 * right_back_error
+            + 0.25 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
     right_back_error = right_back_error_last; // 保存上上次误差
     right_back_error_last = right_back_error; // 保存上次偏差
     return pwm_pid;
 }
 
 // 测试函数，控制电机前进、后退和停止
-void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed, int right_back_speed) {
-
-
+void motor_vel(float left_front_speed, float right_front_speed, float left_back_speed, float right_back_speed) {
     // 判断前进方向，控制
     if (left_front_speed > vel_tolerance) {
         // 前进
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为低电平
+    } else if (left_front_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_RESET); // 设置PD3为低电平
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_SET); // 设置PD4为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
+        HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_SET); // 设置PD4为高电平
+    }
+    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为低电平
+    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为高电平
+
+    if (right_front_speed > vel_tolerance) {
+        // 前进
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为低电平
-    } else if (left_front_speed < -vel_tolerance) {
+    } else if (right_front_speed < -vel_tolerance) {
         // 后退
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PD1为低电平
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
     } else {
         // 刹车
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD2为高电平
-    }
-    if (right_front_speed > vel_tolerance) {
-        // 前进
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PD4为低电平
-    } else if (right_front_speed < -vel_tolerance) {
-        // 后退
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PD3为低电平
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
-    } else {
-        // 刹车
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3, GPIO_PIN_SET); // 设置PD3为高电平
-        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET); // 设置PD4为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD3为高电平
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD4为高电平
     }
     if (left_back_speed > vel_tolerance) {
         // 前进
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为低电平
-    } else if (left_back_speed < -vel_tolerance) {
-        // 后退
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE1为低电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
-    } else {
-        // 刹车
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
-    }
-    if (right_back_speed > vel_tolerance) {
-        // 前进
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
-    } else if (right_back_speed < -vel_tolerance) {
+    } else if (left_back_speed < -vel_tolerance) {
         // 后退
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PE3为低电平
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
@@ -206,9 +195,22 @@ void motor_vel(int left_front_speed, int right_front_speed, int left_back_speed,
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
     }
+    if (right_back_speed > vel_tolerance) {
+        // 前进
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PE2为低电平
+    } else if (right_back_speed < -vel_tolerance) {
+        // 后退
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE1为低电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
+    } else {
+        // 刹车
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_SET); // 设置PE2为高电平
+    }
 
     // 计算占空比
-    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) / 8.63);
+    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) / 8.1);
     uint32_t right_front_duty = (uint32_t) (abs(right_front_speed) / 8.14);
     uint32_t left_back_duty = (uint32_t) (abs(left_back_speed) / 8.63);
     uint32_t right_back_duty = (uint32_t) (abs(right_back_speed) / 8.14);

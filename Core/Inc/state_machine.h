@@ -5,11 +5,14 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
-#include "main.h"
+#include <string.h>
+
 #include "sonic.h"
-#include "motor.h"
-#include "control.h"
-#include "blue.h"
+# include "motor.h"
+# include "servo.h"
+# include "blue.h"
+# include "control.h"
+# include "fuzzy_control.h"
 
 /* 小车状态 ---------------------------------------------------------*/
 typedef enum {

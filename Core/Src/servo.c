@@ -32,23 +32,26 @@ void Servo_catch(void) {
   Servo1_SetAngle(0); // 舵机1抓取物体前先将角度设置为10度
   HAL_Delay(100);
   // TODO: 舵机1抓取物体,这个参数需要根据实际情况调整
-  Servo1_SetAngle(140);
+  Servo1_SetAngle(150);
   HAL_Delay(1000);
 }
 void Servo_put(void) {
   Servo1_SetAngle(10); // 舵机1放下物体
+  HAL_Delay(2000); // 等待1秒钟
 }
 void Servo_turnUp(void) {
-  for (short angle = 0; angle < 100; angle += 10) {
+  for (short angle = 0; angle < 130; angle += 10) {
     Servo2_SetAngle(angle); // 舵机2向上转动
     HAL_Delay(30); // 延时30毫秒
   }
+  HAL_Delay(5000); // 等待5秒钟
 }
 void Servo_turnDown(void) {
-  for (short angle = 100; angle > 0; angle -= 10) {
+  for (short angle = 130; angle > 0; angle -= 10) {
     Servo2_SetAngle(angle); // 舵机2向下转动
     HAL_Delay(30); // 延时30毫秒
   }
+  HAL_Delay(1000);
 }
 
 // 测试函数，舵机1和舵机2从0度到180度再回到0度
