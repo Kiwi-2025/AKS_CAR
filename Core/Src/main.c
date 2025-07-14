@@ -134,7 +134,6 @@ int main(void) {
     // Servo1_Init();
     // Servo2_Init();
     motor_init();
-    // spin();
 
     //PID控制测试用电机
     // left_back_target = 500;
@@ -146,7 +145,7 @@ int main(void) {
     // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, 80);
     // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 80);
     // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, 80);
-    //
+
     // // 前进
     // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
     // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为低电平
@@ -157,8 +156,8 @@ int main(void) {
     // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
     // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET);
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t*)openmv_msg, sizeof(openmv_msg));
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, (uint8_t*)blue_msg, sizeof(blue_msg));
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t *) openmv_msg, sizeof(openmv_msg));
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart2, (uint8_t *) blue_msg, sizeof(blue_msg));
     // motor_vel(600, 600, 600, 600); // 设置初始速度
     /* USER CODE END 2 */
 
@@ -228,8 +227,9 @@ void SystemClock_Config(void) {
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim7) {
-        // 每200ms执行一次
-        set_speed(80,x_error);
+        // 每100ms执行一次,注意如果更改这里,同时需要更改以下几个这个文件
+        // motor.h 中的 read_period
+        set_speed(80, x_error);
         motor_pid_control();
     }
 }

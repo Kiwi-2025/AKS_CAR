@@ -167,8 +167,6 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
         HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
         HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_SET); // 设置PD4为高电平
     }
-    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为低电平
-    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为高电平
 
     if (right_front_speed > vel_tolerance) {
         // 前进
@@ -183,6 +181,7 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD3为高电平
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD4为高电平
     }
+
     if (left_back_speed > vel_tolerance) {
         // 前进
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
@@ -196,6 +195,7 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
     }
+
     if (right_back_speed > vel_tolerance) {
         // 前进
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
