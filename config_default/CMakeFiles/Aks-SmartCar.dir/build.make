@@ -97,10 +97,66 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.s"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/servo.c -o CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.s
 
+CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
+CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/blue.c
+CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/blue.c
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.i"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/blue.c > CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.i
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.s"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/blue.c -o CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.s
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
+CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/control.c
+CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/control.c
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.i"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/control.c > CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.i
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.s"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/control.c -o CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.s
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
+CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/state_machine.c
+CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/state_machine.c
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.i"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/state_machine.c > CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.i
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.s"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/state_machine.c -o CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.s
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
+CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/fuzzy_control.c
+CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/fuzzy_control.c
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.i"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/fuzzy_control.c > CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.i
+
+CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.s"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/fuzzy_control.c -o CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.s
+
 CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/main.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/main.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.i: cmake_force
@@ -114,7 +170,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/gpio.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/gpio.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.i: cmake_force
@@ -128,7 +184,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/dma.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/dma.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.i: cmake_force
@@ -142,7 +198,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/tim.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/tim.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.i: cmake_force
@@ -156,7 +212,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/tim.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/usart.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/usart.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.i: cmake_force
@@ -170,7 +226,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/usart.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_it.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_it.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.i: cmake_force
@@ -184,7 +240,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_hal_msp.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_hal_msp.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.i: cmake_force
@@ -198,7 +254,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/sysmem.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/sysmem.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.i: cmake_force
@@ -212,7 +268,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/sysmem.c.s: cmake_force
 CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/syscalls.c
 CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj: CMakeFiles/Aks-SmartCar.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj -MF CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj.d -o CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/syscalls.c
 
 CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.i: cmake_force
@@ -225,7 +281,7 @@ CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.s: cmake_force
 
 CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.obj: CMakeFiles/Aks-SmartCar.dir/flags.make
 CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.obj: D:/Users/sky/Desktop/MCDP/code/AKS_CAR/startup_stm32f407xx.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building ASM object CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building ASM object CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.obj"
 	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.obj -c D:/Users/sky/Desktop/MCDP/code/AKS_CAR/startup_stm32f407xx.s
 
 CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.i: cmake_force
@@ -240,6 +296,10 @@ CMakeFiles/Aks-SmartCar.dir/startup_stm32f407xx.s.s: cmake_force
 Aks__SmartCar_OBJECTS = \
 "CMakeFiles/Aks-SmartCar.dir/Core/Src/motor.c.obj" \
 "CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.obj" \
+"CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj" \
+"CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj" \
+"CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj" \
+"CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj" \
 "CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj" \
 "CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj" \
 "CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj" \
@@ -273,6 +333,10 @@ Aks__SmartCar_EXTERNAL_OBJECTS = \
 
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/motor.c.obj
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.obj
+Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj
+Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj
+Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj
+Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj
@@ -301,8 +365,8 @@ Aks-SmartCar.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/S
 Aks-SmartCar.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
 Aks-SmartCar.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
 Aks-SmartCar.elf: CMakeFiles/Aks-SmartCar.dir/build.make
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking C executable Aks-SmartCar.elf"
-	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -T "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/STM32F407XX_FLASH.ld" --specs=nano.specs -Wl,-Map=Aks-SmartCar.map -Wl,--gc-sections -Wl,--start-group -lc -lm -Wl,--end-group -Wl,--print-memory-usage $(Aks__SmartCar_OBJECTS) $(Aks__SmartCar_EXTERNAL_OBJECTS) -o Aks-SmartCar.elf 
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking C executable Aks-SmartCar.elf"
+	C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/arm-none-eabi-gcc.exe  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -T "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/STM32F407XX_FLASH.ld" --specs=nano.specs -Wl,-Map=Aks-SmartCar.map -Wl,--gc-sections -Wl,--start-group -lc -lm -Wl,--end-group -Wl,--print-memory-usage -u _printf_float $(Aks__SmartCar_OBJECTS) $(Aks__SmartCar_EXTERNAL_OBJECTS) -o Aks-SmartCar.elf 
 
 # Rule to build all files generated by this target.
 CMakeFiles/Aks-SmartCar.dir/build: Aks-SmartCar.elf

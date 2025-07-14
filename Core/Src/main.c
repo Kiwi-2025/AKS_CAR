@@ -64,7 +64,7 @@ float left_back_error, right_back_error, left_front_error, right_front_error;
 // variants used for testing
 char msg[1024]; // 用于存储发送到蓝牙的数据
 float FLP = 1.0f; // 将输入的偏差值转换为旋转角速度的参数
-
+char openmv_message[100];
 // int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 
 uint32_t upEdge = 0; // 存储上升沿时间
@@ -139,7 +139,7 @@ int main(void) {
     // right_back_target = 0;
     // right_front_target = 0; // 设置前右电机目标速度
     // left_front_target = -500.0; // 设置前左电机目标速度
-
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t*)openmv_message, sizeof(openmv_message));
     // motor_vel(500, 500, 500, 500); // 设置初始速度
     /* USER CODE END 2 */
 

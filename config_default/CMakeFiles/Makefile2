@@ -98,12 +98,12 @@ cmake/stm32cubemx/clean: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/clean
 CMakeFiles/Aks-SmartCar.dir/all: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target Aks-SmartCar"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 "Built target Aks-SmartCar"
 .PHONY : CMakeFiles/Aks-SmartCar.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Aks-SmartCar.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles 30
+	$(CMAKE_COMMAND) -E cmake_progress_start D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles 34
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Aks-SmartCar.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles 0
 .PHONY : CMakeFiles/Aks-SmartCar.dir/rule
@@ -124,7 +124,7 @@ CMakeFiles/Aks-SmartCar.dir/clean:
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/all:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/depend
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30 "Built target STM32_Drivers"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:/Users/sky/Desktop/MCDP/code/AKS_CAR/config_default/CMakeFiles --progress-num=18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34 "Built target STM32_Drivers"
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/all
 
 # Build rule for subdir invocation for target.

@@ -142,6 +142,54 @@ STM32_Drivers/fast:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
 .PHONY : STM32_Drivers/fast
 
+Core/Src/blue.obj: Core/Src/blue.c.obj
+.PHONY : Core/Src/blue.obj
+
+# target to build an object file
+Core/Src/blue.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj
+.PHONY : Core/Src/blue.c.obj
+
+Core/Src/blue.i: Core/Src/blue.c.i
+.PHONY : Core/Src/blue.i
+
+# target to preprocess a source file
+Core/Src/blue.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.i
+.PHONY : Core/Src/blue.c.i
+
+Core/Src/blue.s: Core/Src/blue.c.s
+.PHONY : Core/Src/blue.s
+
+# target to generate assembly for a file
+Core/Src/blue.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.s
+.PHONY : Core/Src/blue.c.s
+
+Core/Src/control.obj: Core/Src/control.c.obj
+.PHONY : Core/Src/control.obj
+
+# target to build an object file
+Core/Src/control.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj
+.PHONY : Core/Src/control.c.obj
+
+Core/Src/control.i: Core/Src/control.c.i
+.PHONY : Core/Src/control.i
+
+# target to preprocess a source file
+Core/Src/control.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.i
+.PHONY : Core/Src/control.c.i
+
+Core/Src/control.s: Core/Src/control.c.s
+.PHONY : Core/Src/control.s
+
+# target to generate assembly for a file
+Core/Src/control.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.s
+.PHONY : Core/Src/control.c.s
+
 Core/Src/dma.obj: Core/Src/dma.c.obj
 .PHONY : Core/Src/dma.obj
 
@@ -165,6 +213,30 @@ Core/Src/dma.s: Core/Src/dma.c.s
 Core/Src/dma.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.s
 .PHONY : Core/Src/dma.c.s
+
+Core/Src/fuzzy_control.obj: Core/Src/fuzzy_control.c.obj
+.PHONY : Core/Src/fuzzy_control.obj
+
+# target to build an object file
+Core/Src/fuzzy_control.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj
+.PHONY : Core/Src/fuzzy_control.c.obj
+
+Core/Src/fuzzy_control.i: Core/Src/fuzzy_control.c.i
+.PHONY : Core/Src/fuzzy_control.i
+
+# target to preprocess a source file
+Core/Src/fuzzy_control.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.i
+.PHONY : Core/Src/fuzzy_control.c.i
+
+Core/Src/fuzzy_control.s: Core/Src/fuzzy_control.c.s
+.PHONY : Core/Src/fuzzy_control.s
+
+# target to generate assembly for a file
+Core/Src/fuzzy_control.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.s
+.PHONY : Core/Src/fuzzy_control.c.s
 
 Core/Src/gpio.obj: Core/Src/gpio.c.obj
 .PHONY : Core/Src/gpio.obj
@@ -261,6 +333,30 @@ Core/Src/servo.s: Core/Src/servo.c.s
 Core/Src/servo.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.s
 .PHONY : Core/Src/servo.c.s
+
+Core/Src/state_machine.obj: Core/Src/state_machine.c.obj
+.PHONY : Core/Src/state_machine.obj
+
+# target to build an object file
+Core/Src/state_machine.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj
+.PHONY : Core/Src/state_machine.c.obj
+
+Core/Src/state_machine.i: Core/Src/state_machine.c.i
+.PHONY : Core/Src/state_machine.i
+
+# target to preprocess a source file
+Core/Src/state_machine.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.i
+.PHONY : Core/Src/state_machine.c.i
+
+Core/Src/state_machine.s: Core/Src/state_machine.c.s
+.PHONY : Core/Src/state_machine.s
+
+# target to generate assembly for a file
+Core/Src/state_machine.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Aks-SmartCar.dir/build.make CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.s
+.PHONY : Core/Src/state_machine.c.s
 
 Core/Src/stm32f4xx_hal_msp.obj: Core/Src/stm32f4xx_hal_msp.c.obj
 .PHONY : Core/Src/stm32f4xx_hal_msp.obj
@@ -424,9 +520,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Aks-SmartCar"
 	@echo "... STM32_Drivers"
+	@echo "... Core/Src/blue.obj"
+	@echo "... Core/Src/blue.i"
+	@echo "... Core/Src/blue.s"
+	@echo "... Core/Src/control.obj"
+	@echo "... Core/Src/control.i"
+	@echo "... Core/Src/control.s"
 	@echo "... Core/Src/dma.obj"
 	@echo "... Core/Src/dma.i"
 	@echo "... Core/Src/dma.s"
+	@echo "... Core/Src/fuzzy_control.obj"
+	@echo "... Core/Src/fuzzy_control.i"
+	@echo "... Core/Src/fuzzy_control.s"
 	@echo "... Core/Src/gpio.obj"
 	@echo "... Core/Src/gpio.i"
 	@echo "... Core/Src/gpio.s"
@@ -439,6 +544,9 @@ help:
 	@echo "... Core/Src/servo.obj"
 	@echo "... Core/Src/servo.i"
 	@echo "... Core/Src/servo.s"
+	@echo "... Core/Src/state_machine.obj"
+	@echo "... Core/Src/state_machine.i"
+	@echo "... Core/Src/state_machine.s"
 	@echo "... Core/Src/stm32f4xx_hal_msp.obj"
 	@echo "... Core/Src/stm32f4xx_hal_msp.i"
 	@echo "... Core/Src/stm32f4xx_hal_msp.s"

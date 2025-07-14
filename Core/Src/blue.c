@@ -47,8 +47,14 @@
 //     HAL_UART_Transmit_DMA(&huart2, (uint8_t *)msg, strlen(msg));
 // }
 
-// void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-// }
+ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
+	 if (huart == &huart1){
+		 HAL_UART_Transmit_DMA(&huart1, (uint8_t*)openmv_message, sizeof(openmv_message));
+
+
+		 HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t*)openmv_message, sizeof(openmv_message));
+	 }
+ }
 
 // Initial implementation of initNameValuePairs
 // __weak void initNameValuePairs() {

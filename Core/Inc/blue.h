@@ -14,8 +14,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include "usart.h"
 
 
+extern char openmv_message[100];
 // 定义键值对结构
 // typedef struct {
 //     char *name;

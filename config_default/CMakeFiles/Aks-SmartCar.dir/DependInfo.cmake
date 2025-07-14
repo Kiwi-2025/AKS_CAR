@@ -30,11 +30,15 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/blue.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/blue.c.obj.d"
+  "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/control.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/control.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/dma.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/dma.c.obj.d"
+  "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/fuzzy_control.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/fuzzy_control.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/gpio.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/gpio.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/main.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/main.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/motor.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/motor.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/motor.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/servo.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/servo.c.obj.d"
+  "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/state_machine.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/state_machine.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_hal_msp.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_hal_msp.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/stm32f4xx_it.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/stm32f4xx_it.c.obj.d"
   "D:/Users/sky/Desktop/MCDP/code/AKS_CAR/Core/Src/syscalls.c" "CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj" "gcc" "CMakeFiles/Aks-SmartCar.dir/Core/Src/syscalls.c.obj.d"
