@@ -70,7 +70,7 @@ void openmv_msg2x_error(char *msg) {
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart == &huart1) {
         openmv_msg2x_error(openmv_msg);
-        HAL_UART_Transmit_DMA(&huart2, (uint8_t *) openmv_msg, sizeof(openmv_msg));
+        // HAL_UART_Transmit_DMA(&huart2, (uint8_t *) openmv_msg, sizeof(openmv_msg));
         // HAL_Delay(100);
         // HAL_UART_Transmit_DMA(&huart1, (uint8_t*)openmv_message, sizeof(openmv_message));
         HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t *) openmv_msg, sizeof(openmv_msg));
@@ -78,8 +78,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     }
     if (huart == &huart2) {
         // 处理从蓝牙接收到的数据
-        set_parameters(blue_msg);
+        // set_parameters(blue_msg);
         // 将状态反馈发送到蓝牙
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart2, (uint8_t*)blue_msg, sizeof(blue_msg));
+        // HAL_UARTEx_ReceiveToIdle_DMA(&huart2, (uint8_t*)blue_msg, sizeof(blue_msg));
     }
 }

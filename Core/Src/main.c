@@ -136,9 +136,9 @@ int main(void) {
     motor_init();
 
     //PID控制测试用电机
-    // left_back_target = 500;
-    // right_back_target = 500;
-    // right_front_target = 500; // 设置前右电机目标速度
+    // left_back_target = 500.0;
+    // right_back_target = 500.0;
+    // right_front_target = 500.0; // 设置前右电机目标速度
     // left_front_target = 500.0; // 设置前左电机目标速度
 
     // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 80);
@@ -151,8 +151,8 @@ int main(void) {
     // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为低电平
     // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
     // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET); // 设置PD2为低电平
-    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-    // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
+    // HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // 设置PE3为高电平
+    // HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE4为低电平
     // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
     // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_2, GPIO_PIN_RESET);
 
@@ -229,7 +229,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim7) {
         // 每100ms执行一次,注意如果更改这里,同时需要更改以下几个这个文件
         // motor.h 中的 read_period
-        set_speed(80, x_error);
+        set_speed(200, x_error);
         motor_pid_control();
     }
 }

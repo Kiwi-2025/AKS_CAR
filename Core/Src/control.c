@@ -71,9 +71,8 @@ void motor_pid_control(void) {
     motor_vel(left_front_speed, right_front_speed, left_back_speed, right_back_speed);
 
     // 调试用函数
-    // sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",
-          //  left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
-    // HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
+    sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
+    HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
 }
 
 /* 设置参数函数 --------------------------------------------------------------------------------*/

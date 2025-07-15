@@ -97,9 +97,9 @@ float left_front_PID(float target_speed, float speed, float *error) {
     // *error = left_front_error_before;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.52 * (left_front_error - left_front_error_last)
+            0.49 * (left_front_error - left_front_error_last)
             + 0.04 * left_front_error
-            + 0.26 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
+            + 0.24 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
     left_front_error_before = left_front_error_last; // 保存上上次误差
     left_front_error_last = left_front_error; // 保存上次偏差
     // *error = pwm_pid;
@@ -113,9 +113,9 @@ float right_front_PID(float target_speed, float speed, float *error) {
     *error = right_front_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.52 * (right_front_error - right_front_error_last)
+            0.49 * (right_front_error - right_front_error_last)
             + 0.031 * right_front_error
-            + 0.26 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
+            + 0.22 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
     right_front_error = right_front_error_last; // 保存上上次误差
     right_front_error_last = right_front_error; // 保存上次偏差
     return pwm_pid;
@@ -128,9 +128,9 @@ float left_back_PID(float target_speed, float speed, float *error) {
     *error = left_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.51 * (left_back_error - left_back_error_last)
+            0.49 * (left_back_error - left_back_error_last)
             + 0.02 * left_back_error
-            + 0.3 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
+            + 0.27 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
     left_back_error = left_back_error_last; // 保存上上次误差
     left_back_error_last = left_back_error; // 保存上次偏差
     return pwm_pid;
@@ -143,9 +143,9 @@ float right_back_PID(float target_speed, float speed, float *error) {
     *error = right_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.51 * (right_back_error - right_back_error_last)
+            0.49 * (right_back_error - right_back_error_last)
             + 0.02 * right_back_error
-            + 0.25 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
+            + 0.22 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
     right_back_error = right_back_error_last; // 保存上上次误差
     right_back_error_last = right_back_error; // 保存上次偏差
     return pwm_pid;
@@ -184,16 +184,16 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
 
     if (left_back_speed > vel_tolerance) {
         // 前进
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE4为低电平
     } else if (left_back_speed < -vel_tolerance) {
         // 后退
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PE3为低电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // 设置PE3为低电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE4为高电平
     } else {
         // 刹车
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE4为高电平
     }
 
     if (right_back_speed > vel_tolerance) {
