@@ -60,15 +60,16 @@ float left_front_target, right_front_target, left_back_target, right_back_target
 float left_front_speed, right_front_speed, left_back_speed, right_back_speed;
 float left_back_feedback, right_back_feedback, left_front_feedback, right_front_feedback;
 float left_back_error, right_back_error, left_front_error, right_front_error;
-float x_error; // 纯跟踪算法的x轴偏差
+float x_error, y_error; // 纯跟踪算法的x轴偏差和y轴偏差
 
 // variants used for testing
 char msg[1024]; // 用于存储发送到蓝牙的数据
-float FLP = -0.048f; // 将输入的偏差值转换为旋转角速度的参数
+float FLP = 0.03f; // 将输入的偏差值转换为旋转角速度的参数
+float LLP = 1.0f; // 将输入的偏差值转换为线速度的参数
 char openmv_msg[100], blue_msg[100]; // 用于存储OpenMV和蓝牙消息
 char blue_feedback_msg[100]; // 用于反馈信息
-// int numPairs = sizeof(name_value_pairs) / sizeof(name_value_pairs[0]);
 
+// 超声波测距相关变量
 uint32_t upEdge = 0; // 存储上升沿时间
 uint32_t downEdge = 0; // 存储下降沿时间
 float distance = 0; // 计算得到的距离(cm)
@@ -136,17 +137,17 @@ int main(void) {
     motor_init();
 
     //PID控制测试用电机
-    // left_back_target = 500.0;
-    // right_back_target = 500.0;
-    // right_front_target = 500.0; // 设置前右电机目标速度
-    // left_front_target = 500.0; // 设置前左电机目标速度
+    // left_back_target = 0.0;
+    // right_back_target = 0.0;
+    // right_front_target = 0.0; // 设置前右电机目标速度
+    // left_front_target = 0.0; // 设置前左电机目标速度
 
-    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 80);
-    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, 80);
-    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 80);
-    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, 80);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 5000);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, 5000);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, 5000);
+    // __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, 5000);
 
-    // // 前进
+    // 前进
     // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
     // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为低电平
     // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD1为高电平
@@ -172,6 +173,7 @@ int main(void) {
         // move_forward();
         // spin();
         // set_speed(600,0);
+
 
         // Servo_catch();
         // Servo_turnUp();
@@ -227,10 +229,18 @@ void SystemClock_Config(void) {
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim7) {
-        // 每100ms执行一次,注意如果更改这里,同时需要更改以下几个这个文件
+        // 每50ms执行一次,注意如果更改这里,同时需要更改以下几个这个文件
         // motor.h 中的 read_period
-        set_speed(200, x_error);
+        set_speed(x_error, 90);
+        // set_speed(30, 30);
         motor_pid_control();
+
+        // left_front_feedback = read_left_front_feedback();
+        // right_front_feedback = read_right_front_feedback();
+        // left_back_feedback = read_left_back_feedback();
+        // right_back_feedback = read_right_back_feedback();
+        // sprintf(msg, "LF:%.2f RF:%.2f LB:%.2f RB:%.2f",left_front_feedback, right_front_feedback, left_back_feedback, right_back_feedback);
+        // HAL_UART_Transmit_DMA(&huart2, (uint8_t *) msg, strlen(msg));
     }
 }
 

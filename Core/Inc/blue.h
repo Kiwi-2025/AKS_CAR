@@ -20,9 +20,9 @@
 
 extern char openmv_msg[100], blue_msg[100]; // 用于存储OpenMV和蓝牙消息
 extern char blue_feedback_msg[100]; // 用于反馈信息
-extern float x_error; // 纯跟踪算法的x轴偏差
+extern float x_error, y_error; // 纯跟踪算法的x轴偏差和y轴偏差
 
 /*转换函数 ----------------------------------*/
-void openmv_msg2x_error(char *msg);
-
+void openmv_msg2error(char *msg);
+int validate_float_string(char *str);   // 验证浮点数字符串格式
 #endif //BLUE_H

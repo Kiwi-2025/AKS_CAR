@@ -28,6 +28,16 @@ void StateMachine_Update(void) {
     StateMachine_HandleState();
 }
 
+void StateMachine_GetEvent(SensorData_t *data) {
+    if (strcmp(data->instruction, "FL") == 0) {
+        current_event = EVENT_TASK1_BEGIN;
+    }
+    else if (strcmp(data->instruction, "OB") == 0) {
+        current_event = EVENT_TASK2_BEGIN;
+    }
+
+}
+
 // 状态处理函数
 void StateMachine_HandleState(void) {
     switch (current_state) {

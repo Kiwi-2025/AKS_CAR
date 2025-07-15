@@ -97,9 +97,9 @@ float left_front_PID(float target_speed, float speed, float *error) {
     // *error = left_front_error_before;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.49 * (left_front_error - left_front_error_last)
-            + 0.04 * left_front_error
-            + 0.24 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
+            0.4 * (left_front_error - left_front_error_last)
+            + 0.26 * left_front_error
+            + 0.8 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
     left_front_error_before = left_front_error_last; // 保存上上次误差
     left_front_error_last = left_front_error; // 保存上次偏差
     // *error = pwm_pid;
@@ -113,9 +113,9 @@ float right_front_PID(float target_speed, float speed, float *error) {
     *error = right_front_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.49 * (right_front_error - right_front_error_last)
-            + 0.031 * right_front_error
-            + 0.22 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
+            1.68 * (right_front_error - right_front_error_last)
+            + 0.07 * right_front_error
+            + 0.11 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
     right_front_error = right_front_error_last; // 保存上上次误差
     right_front_error_last = right_front_error; // 保存上次偏差
     return pwm_pid;
@@ -128,9 +128,9 @@ float left_back_PID(float target_speed, float speed, float *error) {
     *error = left_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.49 * (left_back_error - left_back_error_last)
-            + 0.02 * left_back_error
-            + 0.27 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
+            1.2 * (left_back_error - left_back_error_last)
+            + 0.060 * left_back_error
+            + 0.075 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
     left_back_error = left_back_error_last; // 保存上上次误差
     left_back_error_last = left_back_error; // 保存上次偏差
     return pwm_pid;
@@ -143,9 +143,9 @@ float right_back_PID(float target_speed, float speed, float *error) {
     *error = right_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.49 * (right_back_error - right_back_error_last)
-            + 0.02 * right_back_error
-            + 0.22 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
+            1.85* (right_back_error - right_back_error_last)
+            + 0.05 * right_back_error
+            + 0.015 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
     right_back_error = right_back_error_last; // 保存上上次误差
     right_back_error_last = right_back_error; // 保存上次偏差
     return pwm_pid;
@@ -211,10 +211,10 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
     }
 
     // 计算占空比
-    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) / 8.1);
-    uint32_t right_front_duty = (uint32_t) (abs(right_front_speed) / 8.14);
-    uint32_t left_back_duty = (uint32_t) (abs(left_back_speed) / 8.63);
-    uint32_t right_back_duty = (uint32_t) (abs(right_back_speed) / 8.14);
+    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) * 12.841);
+    uint32_t right_front_duty = (uint32_t) (abs(right_front_speed) * 12.841);
+    uint32_t left_back_duty = (uint32_t) (abs(left_back_speed) * 12.841);
+    uint32_t right_back_duty = (uint32_t) (abs(right_back_speed) * 12.841);
 
     // 设置PWM占空比
     // #define LEFT_FRONT TIM_CHANNEL_1

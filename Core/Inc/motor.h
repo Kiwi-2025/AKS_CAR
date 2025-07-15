@@ -10,7 +10,7 @@
 #define reduction_ratio 21.3        // 减速比
 #define pulse_num       44.0        // 1圈脉冲数
 #define diameter        66.0        // 车轮直径mm✔
-#define read_period     0.1         // 读取编码器的周期s，与读取周期匹配即可
+#define read_period     0.05         // 读取编码器的周期s，与读取周期匹配即可
 // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
 // #define KP 0.7
 // #define KI 0.035
