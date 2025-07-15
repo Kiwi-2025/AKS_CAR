@@ -5,31 +5,24 @@
  *      Author: sky
  */
 
-
 #ifndef BLUE_H
 #define BLUE_H
 
-#include<stm32f4xx_hal.h>
-#include "stm32f4xx_hal_uart.h"
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include "usart.h"
+# include<stm32f4xx_hal.h>
+# include "stm32f4xx_hal_uart.h"
+# include <stdint.h>
+# include <stdio.h>
+# include <string.h>
+# include "main.h"
+# include "control.h"
+# include "usart.h"
 
 
-extern char openmv_message[100];
-// 定义键值对结构
-// typedef struct {
-//     char *name;
-//     float value;
-// } NameValuePair;
-//
-// extern NameValuePair name_value_pairs[10]; // 用于存储键值对的数组
-// extern int numPairs; // 键值对的数量
-// extern char buffer[100]; // 用于存储发送到蓝牙的数据
-// // extern float velocity_msg_test; // 用于测试的速度消息变量
-// extern uint8_t flag_500ms; // 用于标志是否需要发送数据到蓝牙
-// extern UART_HandleTypeDef huart2;
-// void ReturnToBlue(const NameValuePair *pairs, int count, char *msg, size_t buf_size) ;
-// void initNameValuePairs();
+extern char openmv_msg[100], blue_msg[100]; // 用于存储OpenMV和蓝牙消息
+extern char blue_feedback_msg[100]; // 用于反馈信息
+extern float x_error, y_error; // 纯跟踪算法的x轴偏差和y轴偏差
+
+/*转换函数 ----------------------------------*/
+void openmv_msg2error(char *msg);
+int validate_float_string(char *str);   // 验证浮点数字符串格式
 #endif //BLUE_H

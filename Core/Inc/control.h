@@ -15,7 +15,7 @@
 /* 外部变量 --------------------------------------------------------------------------------*/
 extern float left_front_target, right_front_target, left_back_target, right_back_target;
 extern char msg[1024]; // 用于存储发送到蓝牙的数据
-extern float FLP;
+extern float FLP, LLP;
 /* some useful constants------------------------------------------------------------------*/
 // TODO : 需要根据实际情况调整以下参数,确定后请打✔
 # define  half_width        79.5             // 半左右轮距✔
@@ -24,7 +24,7 @@ extern float FLP;
 
 /* 控制函数 --------------------------------------------------------------------------------*/
 double roundPID(double targetposition, double position, double *error); //寻线误差的PID计算函数
-void set_speed(float linear_velocity, float turn_angle_degrees); //根据运动需求设置四轮转速
+void set_speed(float x_error, float y_error); //根据运动需求设置四轮转速
 void groundturn(short spin_dir, short angle); //原地旋转固定角度
 void alongside(double deviation); //巡线总函数
 void avoidance(); //避障总函数
@@ -34,7 +34,7 @@ void avoid_stop();
 void motor_pid_control(void);
 
 /* 远程调参函数 --------------------------------------------------------------------------------*/
-char* set_parameters(char *input); //设置参数函数
+void set_parameters(char *input); //设置参数函数
 /* 测试用函数 ------------------------------------------------------------------------------*/
 void spin(void); //原地旋转运动函数
 void move_forward(void); //前后运动函数

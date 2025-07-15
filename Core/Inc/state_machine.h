@@ -38,6 +38,7 @@ typedef enum {
 
 // 传感器数据结构
 typedef struct {
+    char instruction[32];      // 接受蓝牙的指令字符串
     float distance_front;      // 前方距离
     float distance_left;       // 左侧距离
     float distance_right;      // 右侧距离

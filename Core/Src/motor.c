@@ -13,6 +13,7 @@
 extern float velocity_msg_test; // 用于测试的速度消息变量
 
 void motor_init(void) {
+    x_error = 0; // 初始化x_error为0
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); // 启动TIM1通道1的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2); // 启动TIM1通道2的PWM输出
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); // 启动TIM1通道3的PWM输出
@@ -89,16 +90,16 @@ float read_right_back_feedback(void) {
 
 float left_front_PID(float target_speed, float speed, float *error) {
     float left_front_error = target_speed - speed;
-    static float left_front_error_last = -30, left_front_error_before = 30;
+    static float left_front_error_last = 0, left_front_error_before = 0;
     float pwm_pid = 0;
     // *error = left_front_error;
     // *error = left_front_error_last;
     // *error = left_front_error_before;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.52 * (left_front_error - left_front_error_last)
-            + 0.04 * left_front_error
-            + 0.26 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
+            0.4 * (left_front_error - left_front_error_last)
+            + 0.26 * left_front_error
+            + 0.8 * (left_front_error - 2 * left_front_error_last + left_front_error_before);
     left_front_error_before = left_front_error_last; // 保存上上次误差
     left_front_error_last = left_front_error; // 保存上次偏差
     // *error = pwm_pid;
@@ -112,9 +113,9 @@ float right_front_PID(float target_speed, float speed, float *error) {
     *error = right_front_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.52 * (right_front_error - right_front_error_last)
-            + 0.031 * right_front_error
-            + 0.26 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
+            1.68 * (right_front_error - right_front_error_last)
+            + 0.07 * right_front_error
+            + 0.11 * (right_front_error - 2 * right_front_error_last + right_front_error_before);
     right_front_error = right_front_error_last; // 保存上上次误差
     right_front_error_last = right_front_error; // 保存上次偏差
     return pwm_pid;
@@ -127,9 +128,9 @@ float left_back_PID(float target_speed, float speed, float *error) {
     *error = left_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.51 * (left_back_error - left_back_error_last)
-            + 0.02 * left_back_error
-            + 0.3 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
+            1.2 * (left_back_error - left_back_error_last)
+            + 0.060 * left_back_error
+            + 0.075 * (left_back_error - 2 * left_back_error_last + left_back_error_before);
     left_back_error = left_back_error_last; // 保存上上次误差
     left_back_error_last = left_back_error; // 保存上次偏差
     return pwm_pid;
@@ -142,9 +143,9 @@ float right_back_PID(float target_speed, float speed, float *error) {
     *error = right_back_error;
     // 参考基准：KP = 0.7, KI = 0.035, KD = 0.23;
     pwm_pid =
-            0.51 * (right_back_error - right_back_error_last)
-            + 0.02 * right_back_error
-            + 0.25 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
+            1.85* (right_back_error - right_back_error_last)
+            + 0.05 * right_back_error
+            + 0.015 * (right_back_error - 2 * right_back_error_last + right_back_error_before);
     right_back_error = right_back_error_last; // 保存上上次误差
     right_back_error_last = right_back_error; // 保存上次偏差
     return pwm_pid;
@@ -166,8 +167,6 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
         HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为高电平
         HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_SET); // 设置PD4为高电平
     }
-    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, GPIO_PIN_SET); // 设置PD3为低电平
-    // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_15, GPIO_PIN_RESET); // 设置PD4为高电平
 
     if (right_front_speed > vel_tolerance) {
         // 前进
@@ -182,19 +181,21 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET); // 设置PD3为高电平
         HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET); // 设置PD4为高电平
     }
+
     if (left_back_speed > vel_tolerance) {
         // 前进
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_RESET); // 设置PE4为低电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET); // 设置PE4为低电平
     } else if (left_back_speed < -vel_tolerance) {
         // 后退
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET); // 设置PE3为低电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET); // 设置PE3为低电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE4为高电平
     } else {
         // 刹车
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET); // 设置PE3为高电平
-        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4, GPIO_PIN_SET); // 设置PE4为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET); // 设置PE3为高电平
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE4为高电平
     }
+
     if (right_back_speed > vel_tolerance) {
         // 前进
         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_SET); // 设置PE1为高电平
@@ -210,10 +211,10 @@ void motor_vel(float left_front_speed, float right_front_speed, float left_back_
     }
 
     // 计算占空比
-    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) / 8.1);
-    uint32_t right_front_duty = (uint32_t) (abs(right_front_speed) / 8.14);
-    uint32_t left_back_duty = (uint32_t) (abs(left_back_speed) / 8.63);
-    uint32_t right_back_duty = (uint32_t) (abs(right_back_speed) / 8.14);
+    uint32_t left_front_duty = (uint32_t) (abs(left_front_speed) * 12.841);
+    uint32_t right_front_duty = (uint32_t) (abs(right_front_speed) * 12.841);
+    uint32_t left_back_duty = (uint32_t) (abs(left_back_speed) * 12.841);
+    uint32_t right_back_duty = (uint32_t) (abs(right_back_speed) * 12.841);
 
     // 设置PWM占空比
     // #define LEFT_FRONT TIM_CHANNEL_1
