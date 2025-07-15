@@ -10,20 +10,20 @@ clock = time.clock() # 跟踪FPS帧率
 # 变量初始化
 uart = pyb.UART(3, 115200, timeout_char=1000)
 # 阈值设置 根据实际情况进行更改 (1, 45, -29, 22, -21, 13)
-TRA_RGB = [(20, 45, -34, 0, -10, 12)]
+TRA_RGB = [(0, 38, -128, 16, -32, 30)]
 # TRA_TH = [(0, 5)]           # 巡线的灰度值 阈值[(0, 64)][(128, 255)]
 # TRA_AngTH = 30                  # 巡线时角度阈值
 # ROI区域设置
 # (x,y,w,h,weight)=(矩形左上顶点的坐标(x,y), 矩形宽度和高度(w,h),权重)
 TRA_ROIS_LEFT = [ # [ROI, weight]
-        (0, 200, 160, 60, 0.7), # left
-        (0, 140, 160, 60, 0.3),
-        (0, 60, 160, 60, 0.1)]
+        (0, 80, 80, 40, 0.7), # left
+        (00, 40, 80, 40, 0.3),
+        (00, 0, 80, 40, 0.1)]
 
 TRA_ROIS_RIGHT = [
-        (160, 200, 160, 60, 0.7), # right
-        (160, 140, 160, 60, 0.3),
-        (160, 60, 160, 60, 0.1)]
+        (80, 80, 80, 40, 0.7), # right
+        (80, 40, 80, 40, 0.3),
+        (80, 0, 80, 40, 0.1)]
 
 
 
@@ -102,7 +102,8 @@ def Center(ROI, TRA_img):
             Weight_Sum += r[4]
 
         elif blobs is None:
-            Centroid_Sum += 0
+            Centroid_Sum += 210
+            Weight_Sum += r[4]
             print("No blobs found in ROI:", r[0:4])
 
     # 中间公式: 确定线心位置 = 质心和/权值和
@@ -117,7 +118,7 @@ def Center(ROI, TRA_img):
 # 摄像头初始化
 sensor.reset()                     # 初始化相机传感器
 sensor.set_pixformat(sensor.RGB565)# 设置相机模块的像素模式 16 bits/像素 GRAY为8
-sensor.set_framesize(sensor.QVGA)  # 设置相机模块的帧大小 320x240 (QQVGA 160x120)
+sensor.set_framesize(sensor.QQVGA)  # 设置相机模块的帧大小 320x240 (QQVGA 160x120)
 sensor.skip_frames(time=200)       # 跳过30帧 让相机图像在改变相机设置后稳定下来
 sensor.set_auto_gain(False)        # 关闭自动增益
 sensor.set_auto_whitebal(False)    # 关闭默认的白平衡
@@ -126,7 +127,7 @@ sensor.set_auto_whitebal(False)    # 关闭默认的白平衡
 deviation_sum = 0.0      # 偏差累计值
 frame_count = 0          # 有效帧计数
 last_send_time = pyb.millis()  # 上一次发送时间
-SEND_INTERVAL = 200      # 发送间隔(ms)
+SEND_INTERVAL = 50      # 发送间隔(ms)
 
 
 # 主循环
@@ -149,14 +150,16 @@ while (1):
         Center_Left = Center(ROI=TRA_ROIS_LEFT, TRA_img=TRA_img)
         Center_Right = Center(ROI=TRA_ROIS_RIGHT, TRA_img=TRA_img)
 
-        if (Center_Left != 0) and (Center_Right != 0):
-            Center_Pos = (Center_Left + Center_Right) / 2
-        elif (Center_Left != 0) and (Center_Right == 0):
-            Center_Pos = Center_Left
-        elif (Center_Left == 0) and (Center_Right != 0):
-            Center_Pos = Center_Right
-        else:
-            Center_Pos = 0
+        # if (Center_Left != 0) and (Center_Right != 0):
+        #     Center_Pos = (Center_Left + Center_Right) / 2
+        # elif (Center_Left != 0) and (Center_Right == 0):
+        #     Center_Pos = Center_Left
+        # elif (Center_Left == 0) and (Center_Right != 0):
+        #     Center_Pos = Center_Right
+        # else:
+        #     Center_Pos = 0
+
+        Center_Pos = min(Center_Left, Center_Right) + 50
 
         Deflection_Angle = 0 # 需要将线心Center_Pos转换为偏角 偏角初始化为0
 
@@ -170,9 +173,9 @@ while (1):
             Deflection_Angle = -math.atan((Center_Pos - 180)/ 120) # 计算偏角
             Deflection_Angle = math.degrees(Deflection_Angle) # 弧度值转换为角度
 
-            TRA_img.draw_cross(int(Center_Pos), 120, color=(0, 0, 255), size=10) # 绘制十字线标记图像中心
-            TRA_img.draw_circle(180, 120, 5, color=(0, 255, 0))
-            deviation = 180 - Center_Pos # 计算偏离中心的距离
+            TRA_img.draw_cross(int(Center_Pos), 60, color=(0, 0, 255), size=10) # 绘制十字线标记图像中心
+            TRA_img.draw_circle(80, 60, 5, color=(0, 255, 0))
+            deviation = 80 - Center_Pos # 计算偏离中心的距离
             # print(deviation, Center_Pos) test whether deviation is correct
 
             # 累计偏差值用于平均计算
@@ -191,7 +194,6 @@ while (1):
 
     # clock.fps()
     # print(clock.fps()) # 打印FPS帧率
-
 
 
 

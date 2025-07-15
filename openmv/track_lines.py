@@ -298,3 +298,6 @@
 #     uart.write(aaa.to_bytes(1,'int')+x1.to_bytes(2,'int')+x2.to_bytes(2,'int'))
 #     print(x1,x2)
 
+
+
+
